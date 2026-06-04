@@ -3,8 +3,7 @@ import { motion } from "framer-motion";
 import { HiArrowDown, HiOutlineMail } from "react-icons/hi";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { profile } from "@/data/profile";
-import { stats } from "@/data/stats";
-import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
+
 
 const HeroScene = lazy(() =>
   import("@/components/effects/HeroScene").then((m) => ({ default: m.HeroScene })),
