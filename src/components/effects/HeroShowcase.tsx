@@ -127,9 +127,14 @@ export function HeroShowcase({
     onSelect(prev);
   }, [activeIndex, onSelect]);
 
-  useEffect(() => {
-    preloadImages(heroShowcaseProjects.map((p) => p.image).filter(Boolean) as string[]);
-  }, []);
+useEffect(() => {
+  const nextImages = [
+    heroShowcaseProjects[0]?.image,
+    heroShowcaseProjects[1]?.image,
+  ].filter(Boolean);
+
+  preloadImages(nextImages as string[]);
+}, []);
 
   useEffect(() => {
     if (reduceMotion || isPaused) return;
@@ -195,7 +200,8 @@ export function HeroShowcase({
       aria-roledescription="carousel"
     >
       <div
-        className={`absolute top-1/3 left-1/2 -translate-x-1/2 w-[70%] max-w-xs h-[40%] rounded-full bg-gradient-to-br ${accent.glow} to-transparent blur-[60px] sm:blur-[80px] opacity-40 sm:opacity-45 transition-colors duration-700 pointer-events-none`}
+        className={`absolute top-1/3 left-1/2 -translate-x-1/2 w-[70%] max-w-xs h-[40%] rounded-full bg-gradient-to-br ${accent.glow} to-transparent blur-[40px]
+sm:blur-[60px] opacity-40 sm:opacity-45 transition-colors duration-700 pointer-events-none`}
       />
 
       <motion.div
@@ -258,6 +264,8 @@ export function HeroShowcase({
                 key={project.id}
                 src={project.image}
                 alt={project.title}
+                  width={1600}
+  height={900}
                 custom={direction}
                 variants={slideVariants}
                 initial="enter"
@@ -265,7 +273,8 @@ export function HeroShowcase({
                 exit="exit"
                 transition={{ duration: 0.38, ease: slideEase }}
                 className="absolute inset-2 sm:inset-3 m-auto max-w-full max-h-full w-full h-full object-contain object-center"
-                loading={displayIndex === 0 ? "eager" : "lazy"}
+               loading={displayIndex === 0 ? "eager" : "lazy"}
+fetchPriority={displayIndex === 0 ? "high" : "auto"}
                 decoding="async"
               />
             </AnimatePresence>

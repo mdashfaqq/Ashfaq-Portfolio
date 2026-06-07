@@ -39,10 +39,10 @@ export function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16 flex items-center justify-between gap-4 mt-5">
         <a href="#" className="flex items-center gap-2.5 group min-w-0">
-          <div className="w-8 h-8 shrink-0 rounded-lg bg-white flex items-center justify-center text-xs font-semibold text-[#09090b]">
-            MA
-          </div>
-          <span className="font-medium text-white/90 hidden sm:block text-sm group-hover:text-white transition-colors truncate">
+          {/* <div className="w-8 h-8 shrink-0 rounded-lg bg-white flex items-center justify-center text-xs font-semibold text-[#09090b]">
+            Md
+          </div> */}
+          <span className="font-medium text-white/90 hidden sm:block text-lg group-hover:text-white transition-colors truncate">
             {profile.firstName} {profile.lastName}
           </span>
         </a>

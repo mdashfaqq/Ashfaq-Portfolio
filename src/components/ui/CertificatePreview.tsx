@@ -29,6 +29,7 @@ export function CertificatePreview({
           alt=""
           className="h-7 w-10 shrink-0 rounded object-cover object-top border border-white/[0.06]"
           loading="lazy"
+          decoding="async"
         />
       ) : (
         <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-white/[0.08] bg-white/[0.04]">
