@@ -108,10 +108,17 @@ export function TypingHeadline() {
   return (
     <div className="w-full max-w-full min-w-0" aria-live="polite">
       <h1 className="w-full max-w-full font-semibold tracking-tight text-white [overflow-wrap:anywhere]">
-        <span
-          className="block text-[clamp(1.375rem,5vw+0.4rem,2.75rem)] leading-[1.2] sm:leading-[1.15] break-words"
-          style={{ minHeight: "2.4em" }}
-        >
+<span
+  className="
+    block
+    mt-1
+    sm:mt-2
+    text-[clamp(1.0625rem,3.8vw+0.35rem,2.25rem)]
+    leading-[1.1]
+    sm:leading-[1.2]
+  "
+  style={{ minHeight: "1.4em" }}
+>
           {introText}
           {phase === "intro" && !reduceMotion && (
             <span className="typing-cursor" aria-hidden="true" />
@@ -126,7 +133,7 @@ export function TypingHeadline() {
           }}
           transition={{ duration: 0.5, ease: easeSmooth }}
           className="block mt-2 sm:mt-3 text-white/75 text-[clamp(1.0625rem,3.8vw+0.35rem,2.25rem)] leading-[1.25] sm:leading-[1.2] break-words"
-          style={{ minHeight: "2.6em" }}
+          style={{ minHeight: "1.6em" }}
         >
           <motion.span
             animate={{ opacity: roleFade ? 0.55 : 1 }}
