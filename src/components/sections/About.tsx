@@ -10,52 +10,41 @@ export function About() {
       <div className="max-w-7xl mx-auto">
         <SectionHeader
           label="About"
-          title="Engineering secure, scalable products"
-          description="Full-stack development with a cybersecurity mindset."
+          title="Building software that works in production"
+          description="Full-stack development focused on real-world business outcomes."
         />
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid lg:grid-cols-5 gap-10 items-start">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-5"
+            transition={{ duration: 0.4 }}
+            className="lg:col-span-3 space-y-4"
           >
             {paragraphs.map((p, i) => (
-              <p key={i} className="text-[var(--muted)] leading-relaxed text-lg">
+              <p key={i} className="text-[var(--muted)] leading-relaxed">
                 {p}
               </p>
             ))}
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="glass-strong rounded-3xl p-8 neon-glow"
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="lg:col-span-2 space-y-3"
           >
-            <h3 className="text-lg font-semibold text-white mb-6">Tech Stack</h3>
-            <div className="space-y-6">
-              {Object.entries(profile.techStack).map(([category, items]) => (
-                <div key={category}>
-                  <p className="text-xs uppercase tracking-widest text-[var(--primary)] mb-3">
-                    {category}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {items.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 py-1.5 rounded-lg bg-white/5 text-sm text-white/90 border border-white/5 hover:border-[var(--primary)]/30 transition-colors"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+            {profile.capabilities.map((cap) => (
+              <div
+                key={cap.label}
+                className="surface-card px-4 py-3.5"
+              >
+                <p className="text-sm font-medium text-white">{cap.label}</p>
+                <p className="text-xs text-[var(--muted)] mt-0.5">{cap.description}</p>
+              </div>
+            ))}
           </motion.div>
         </div>
       </div>

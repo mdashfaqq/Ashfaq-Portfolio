@@ -1,6 +1,6 @@
-export const stats = [
-  { label: "Projects Built", value: 9, suffix: "+" },
-  { label: "REST APIs Developed", value: 25, suffix: "+" },
-  { label: "Client Applications", value: 5, suffix: "+" },
-  { label: "Problems Solved", value: 300, suffix: "+" },
-];
+// export const stats = [
+//   { label: "Products Built", value: 6, suffix: "+" },
+//   { label: "Live Deployments", value: 2 },
+//   { label: "Business Applications", value: 6 },
+//   { label: "REST APIs Shipped", value: 25, suffix: "+" },
+// ];

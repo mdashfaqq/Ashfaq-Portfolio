@@ -1,10 +1,18 @@
+export type ProjectCategory = "mobile" | "web" | "fullstack" | "business";
+
 export interface Project {
   id: string;
   title: string;
   description: string;
+  highlight: string;
+  impact?: string;
+  category: ProjectCategory;
+  /** Display label for platform type — overrides category default when set */
+  platformLabel?: string;
   tech: string[];
   features: string[];
   architecture?: string[];
+  outcomes?: string[];
   github?: string;
   live?: string;
   image?: string;
@@ -15,8 +23,12 @@ export const projects: Project[] = [
   {
     id: "coredine",
     title: "CoreDine",
+    highlight: "Restaurant POS & kitchen order management",
+    impact: "End-to-end restaurant operations — billing, inventory, KOT, and thermal printing",
     description:
       "A complete Restaurant POS and Kitchen Order Ticket Management System with billing, inventory management, order tracking, role-based access control, table management, invoice generation, and real-time restaurant workflows.",
+    category: "mobile",
+    platformLabel: "Mobile Application",
     tech: ["Flutter", "PHP", "MySQL", "REST API"],
     features: [
       "Role Based Access",
@@ -33,15 +45,24 @@ export const projects: Project[] = [
       "JWT Authentication",
       "Hostinger Deployment",
     ],
+    outcomes: [
+      "Unified POS, KOT, and billing in one system",
+      "Real-time kitchen order flow",
+      "Deployed for live restaurant use",
+    ],
     github: "https://github.com/mdashfaqq/CoreDine-Restaurant-POS",
     featured: true,
-    image: "/coredine.png",
+    image: "/coredine.webp",
   },
   {
     id: "edutenant",
     title: "EduTenant LMS",
+    highlight: "Multi-tenant learning management platform",
+    impact: "Attendance, scheduling, assignments, and announcements for educational institutions",
     description:
       "Multi-tenant Learning Management System supporting attendance tracking, academic scheduling, assignments, announcements, and educational workflows.",
+    category: "fullstack",
+    platformLabel: "Mobile Application",
     tech: ["Flutter", "PHP", "MySQL", "REST API"],
     features: [
       "Multi-tenant Architecture",
@@ -49,15 +70,24 @@ export const projects: Project[] = [
       "Academic Scheduling",
       "Assignments & Announcements",
     ],
+    outcomes: [
+      "Multi-tenant LMS architecture",
+      "Digital attendance and scheduling",
+      "Mobile-first academic workflows",
+    ],
     github: "https://github.com/mdashfaqq/EduTenant-LMS",
-    image: "/lms.png",
+    image: "/lms.webp",
     featured: true,
   },
   {
     id: "rental-utility",
-    title: "Rental Utility POS System",
+    title: "Rental Utility POS",
+    highlight: "Business utility management platform",
+    impact: "Quotations, invoicing, ledgers, and analytics for utility businesses",
     description:
       "Business utility management platform supporting quotation generation, inventory tracking, invoicing, customer management, ledgers, and analytics.",
+    category: "web",
+    platformLabel: "Web Application",
     tech: ["React", "TypeScript", "PHP", "MySQL"],
     features: [
       "Quotation Generation",
@@ -66,15 +96,24 @@ export const projects: Project[] = [
       "Customer Management",
       "Analytics Dashboard",
     ],
+    outcomes: [
+      "End-to-end quotation-to-invoice flow",
+      "Inventory and ledger management",
+      "Business analytics dashboard",
+    ],
     github: "https://github.com/mdashfaqq/Rental-Utility-System",
-    image:"/rentalpos.png",
+    image: "/rentalpos.webp",
     featured: true,
   },
   {
     id: "bismi",
-    title: "Bismi Furniture eCommerce",
+    title: "Bismi Furniture",
+    highlight: "Production eCommerce platform",
+    impact: "Live at bismibedmart.com — full product catalog, orders, and secure checkout",
     description:
       "Online furniture store platform with authentication, product management, order workflows, and backend API integration.",
+    category: "web",
+    platformLabel: "Web Application",
     tech: ["React", "PHP", "MySQL", "JWT"],
     features: [
       "Product Management",
@@ -82,16 +121,25 @@ export const projects: Project[] = [
       "Order Workflows",
       "API Integration",
     ],
+    outcomes: [
+      "Live production eCommerce store",
+      "Secure checkout and order management",
+      "Full product catalog system",
+    ],
     github: "https://github.com/mdashfaqq/BismiFurniture---Online-Furnstore",
     live: "https://bismibedmart.com/",
-    image: "/bismi.png",
+    image: "/bismi.webp",
     featured: true,
   },
   {
     id: "offlinedocs",
     title: "OfflineDocs",
+    highlight: "Privacy-first document vault",
+    impact: "100% offline — no cloud, no servers, full user data control",
     description:
-      "A privacy-focused document vault for users and families to securely store and manage important documents—PDFs, certificates, IDs, licenses, and notes—completely offline. Designed for users who want full control over personal data without third-party servers or cloud services.",
+      "A privacy-focused document vault for users and families to securely store and manage important documents—PDFs, certificates, IDs, licenses, and notes—completely offline.",
+    category: "mobile",
+    platformLabel: "Mobile Application",
     tech: ["Flutter", "SQLite", "Local Storage", "File Management"],
     features: [
       "100% Offline Operation",
@@ -100,7 +148,11 @@ export const projects: Project[] = [
       "PDF Viewer",
       "Family Document Management",
       "No Cloud Dependency",
-      "Privacy-First Architecture",
+    ],
+    outcomes: [
+      "100% offline document storage",
+      "Privacy-first, no cloud dependency",
+      "Family document organization",
     ],
     architecture: [
       "Flutter Mobile App",
@@ -108,15 +160,19 @@ export const projects: Project[] = [
       "Local File System",
       "Offline-Only — No Cloud",
     ],
-    image: "/Offlinedocs.png",
+    image: "/Offlinedocs.webp",
     github: "https://github.com/mdashfaqq/OfflineDocs-Offline-Document-Oraganizer-",
     featured: true,
   },
   {
     id: "unreadymades",
     title: "UnReadymades",
+    highlight: "Garment eCommerce platform",
+    impact: "Live at unreadymades.com — digitized traditional garment business online",
     description:
-      "An eCommerce platform for a readymade garment business—customers browse products, manage accounts, place orders, and shop through a responsive experience. Digitized a traditional garment business with an online sales platform and improved customer accessibility.",
+      "An eCommerce platform for a readymade garment business—customers browse products, manage accounts, place orders, and shop through a responsive experience.",
+    category: "web",
+    platformLabel: "Web Application",
     tech: ["React", "PHP", "MySQL", "REST API"],
     features: [
       "Product Catalog Management",
@@ -125,7 +181,11 @@ export const projects: Project[] = [
       "Order Management",
       "Responsive Design",
       "Admin Product Control",
-      "Backend API Integration",
+    ],
+    outcomes: [
+      "Live garment eCommerce platform",
+      "Digitized traditional retail business",
+      "Full shopping and admin workflow",
     ],
     architecture: [
       "React Frontend",
@@ -134,8 +194,19 @@ export const projects: Project[] = [
       "Production Deployment",
     ],
     live: "https://unreadymades.com/",
-    image:"/unreadymades.png",
+    image: "/unreadymades.webp",
     github: "https://github.com/mdashfaqq/UNReadymades-Online-Fabric-Shopping",
     featured: true,
   },
 ];
+
+export const categoryLabels: Record<ProjectCategory, string> = {
+  mobile: "Mobile Application",
+  web: "Web Application",
+  fullstack: "Mobile + Web Platform",
+  business: "Business Software",
+};
+
+export function getPlatformLabel(project: Pick<Project, "category" | "platformLabel">): string {
+  return project.platformLabel ?? categoryLabels[project.category];
+}

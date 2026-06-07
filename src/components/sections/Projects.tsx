@@ -1,169 +1,255 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { HiExternalLink, HiCode } from "react-icons/hi";
+import { HiExternalLink, HiArrowRight } from "react-icons/hi";
 import { FaGithub } from "react-icons/fa";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { ProjectPlatformBadge } from "@/components/ui/PlatformBadge";
+import { CaseStudyModal } from "@/components/projects/CaseStudyModal";
 import { projects, type Project } from "@/data/projects";
+import { getCaseStudy, hasCaseStudy } from "@/data/caseStudies";
 
-function ProjectCard({
+type CardSize = "flagship" | "large" | "standard";
+
+function ProjectLinks({
   project,
-  index,
-  onSelect,
+  onCaseStudy,
+  showCaseStudy,
 }: {
   project: Project;
-  index: number;
-  onSelect: (p: Project) => void;
+  onCaseStudy?: () => void;
+  showCaseStudy?: boolean;
 }) {
   return (
+    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+      {showCaseStudy && onCaseStudy && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onCaseStudy();
+          }}
+          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-white hover:text-white/90 transition-colors touch-manipulation"
+        >
+          Case study
+          <HiArrowRight size={14} className="opacity-70" />
+        </button>
+      )}
+      {project.live && (
+        <a
+          href={project.live}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="inline-flex items-center gap-1 text-xs text-emerald-400 hover:text-emerald-300 transition-colors touch-manipulation"
+        >
+          <HiExternalLink size={12} />
+          Live
+        </a>
+      )}
+      {project.github && (
+        <a
+          href={project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="inline-flex items-center gap-1 text-xs text-[var(--muted)] hover:text-white transition-colors touch-manipulation"
+        >
+          <FaGithub size={12} />
+          GitHub
+        </a>
+      )}
+    </div>
+  );
+}
+
+function ProductCard({
+  project,
+  size,
+  index,
+  onOpen,
+}: {
+  project: Project;
+  size: CardSize;
+  index: number;
+  onOpen: (p: Project) => void;
+}) {
+  const isFlagship = size === "flagship";
+  const isLarge = size === "large";
+  const caseStudyAvailable = hasCaseStudy(project.id);
+
+  return (
     <motion.article
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
-      onClick={() => onSelect(project)}
-     className="
-group
-relative
-overflow-hidden
-rounded-3xl
-bg-[#070B17]
-border
-border-white/[0.06]
-cursor-pointer
-transition-all
-duration-500
-hover:-translate-y-1
-hover:border-white/[0.12]
-hover:shadow-[0_20px_60px_rgba(0,0,0,0.35)]
-flex
-flex-col
-"
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ delay: index * 0.06, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      onClick={() => onOpen(project)}
+      className={`group relative cursor-pointer surface-card overflow-hidden touch-manipulation ${
+        isFlagship ? "col-span-full" : ""
+      }`}
     >
-<div className="relative aspect-video overflow-hidden bg-[#0f172a] border-b border-white/5">
-<div className="relative overflow-hidden bg-slate-900">
-  <img
-    src={project.image}
-    alt={project.title}
-    className="w-full h-auto"
-  />
-</div>
-</div>
-      <div className="p-6 flex flex-col flex-1">
-        <div className="flex flex-wrap gap-2 mb-3">
-          {project.tech.slice(0, 4).map((t) => (
-            <span
-              key={t}
-              className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md bg-[var(--primary)]/10 text-[var(--secondary)] border border-[var(--primary)]/15"
-            >
-              {t}
-            </span>
-          ))}
-        </div>
-        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-gradient transition-all">
-          {project.title}
-        </h3>
-        <p className="text-[var(--muted)] text-sm line-clamp-2 mb-4 flex-1">{project.description}</p>
-        <div className="flex gap-3">
-          {project.github && (
-            <span className="text-xs text-[var(--muted)] flex items-center gap-1">
-              <FaGithub /> Source
-            </span>
+      <div
+        className={
+          isFlagship
+            ? "grid lg:grid-cols-2 gap-0"
+            : "flex flex-col h-full"
+        }
+      >
+        <div
+          className={`relative overflow-hidden bg-[#0f0f12] ${
+            isFlagship
+              ? "aspect-[16/10] lg:aspect-auto lg:min-h-[400px]"
+              : isLarge
+                ? "aspect-[16/10]"
+                : "aspect-[16/10]"
+          }`}
+        >
+          <img
+            src={project.image}
+            alt={project.title}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#09090b]/70 via-transparent to-transparent lg:from-transparent lg:via-transparent lg:to-transparent" />
+          {project.live && (
+            <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2 py-1 rounded-full bg-black/45 backdrop-blur-md border border-emerald-500/20">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span className="text-[10px] font-medium text-emerald-300">Live</span>
+            </div>
           )}
-          <span className="text-xs text-[var(--primary)] ml-auto group-hover:underline">
-            View details →
-          </span>
+        </div>
+
+        <div
+          className={`flex flex-col ${
+            isFlagship ? "p-6 sm:p-8 lg:p-10 justify-center" : "p-5 sm:p-6 flex-1"
+          }`}
+        >
+          <div className="flex flex-wrap items-center gap-2 mb-3 sm:mb-4">
+            <ProjectPlatformBadge project={project} />
+          </div>
+
+          <h3
+            className={`font-semibold text-white mb-2 group-hover:text-white/90 transition-colors ${
+              isFlagship ? "text-2xl sm:text-3xl lg:text-4xl" : isLarge ? "text-xl sm:text-2xl" : "text-lg sm:text-xl"
+            }`}
+          >
+            {project.title}
+          </h3>
+
+          <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed mb-4">
+            {project.impact ?? project.highlight}
+          </p>
+
+          {project.outcomes && (
+            <ul className="space-y-1.5 mb-5 sm:mb-6">
+              {project.outcomes.slice(0, isFlagship ? 3 : 2).map((o) => (
+                <li
+                  key={o}
+                  className="flex gap-2 text-xs sm:text-sm text-white/60 leading-relaxed"
+                >
+                  <span className="text-white/25 shrink-0">—</span>
+                  {o}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-5 sm:mb-6">
+            {project.tech.map((t) => (
+              <span
+                key={t}
+                className="text-[10px] sm:text-[11px] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-white/[0.04] text-white/50 border border-white/[0.06]"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-auto pt-4 border-t border-white/[0.06]">
+            <ProjectLinks
+              project={project}
+              showCaseStudy={caseStudyAvailable}
+              onCaseStudy={() => onOpen(project)}
+            />
+          </div>
         </div>
       </div>
     </motion.article>
   );
 }
 
-function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+function ProjectDetailModal({
+  project,
+  onClose,
+}: {
+  project: Project;
+  onClose: () => void;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+      className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-black/75 backdrop-blur-sm p-0 sm:p-4"
       onClick={onClose}
     >
       <motion.div
-        initial={{ scale: 0.95, y: 20 }}
-        animate={{ scale: 1, y: 0 }}
-        exit={{ scale: 0.95, y: 20 }}
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 24 }}
+        transition={{ duration: 0.28 }}
         onClick={(e) => e.stopPropagation()}
-        className="glass-strong rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-8 md:p-10 neon-glow"
+      className="surface-elevated w-full sm:max-w-2xl max-h-[94dvh] overflow-y-auto hide-scrollbar rounded-t-2xl sm:rounded-2xl"
       >
         {project.image && (
-          <div className="mb-6 -mx-2 sm:-mx-4 -mt-2 sm:-mt-4 rounded-2xl overflow-hidden border border-white/10">
+          <div className="aspect-video bg-[#0f0f12] overflow-hidden rounded-t-2xl">
             <img
               src={project.image}
-              alt={`${project.title} screenshot`}
-              className="w-full h-auto max-h-[28rem] object-contain object-top"
+              alt={project.title}
+              className="w-full h-full object-cover object-top"
             />
           </div>
         )}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {project.tech.map((t) => (
-            <span key={t} className="px-3 py-1 rounded-full text-xs bg-[var(--primary)]/10 text-[var(--primary)] border border-[var(--primary)]/20">
-              {t}
-            </span>
-          ))}
-        </div>
-        <h3 className="text-2xl font-bold text-white mb-4">{project.title}</h3>
-        <p className="text-[var(--muted)] leading-relaxed mb-6">{project.description}</p>
-
-        <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-3">Features</h4>
-        <ul className="grid sm:grid-cols-2 gap-2 mb-6">
-          {project.features.map((f) => (
-            <li key={f} className="flex gap-2 text-sm text-[var(--muted)]">
-              <span className="text-[var(--accent)]">✓</span> {f}
-            </li>
-          ))}
-        </ul>
-
-        {project.architecture && (
-          <>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-3">Architecture</h4>
-            <ul className="space-y-1 mb-6">
-              {project.architecture.map((a) => (
-                <li key={a} className="text-sm text-[var(--muted)] flex gap-2">
-                  <span className="text-[var(--primary)]">→</span> {a}
+        <div className="p-5 sm:p-8">
+          <ProjectPlatformBadge project={project} className="mb-4" />
+          <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">{project.title}</h3>
+          <p className="text-[var(--muted)] leading-relaxed mb-4">{project.description}</p>
+          {project.outcomes && (
+            <ul className="space-y-2 mb-6">
+              {project.outcomes.map((o) => (
+                <li key={o} className="text-sm text-white/70 flex gap-2">
+                  <span className="text-emerald-400">✓</span> {o}
                 </li>
               ))}
             </ul>
-          </>
-        )}
-
-        <div className="flex flex-wrap gap-3">
-          {project.github && (
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full glass text-white hover:border-[var(--primary)]/40"
-            >
-              <HiCode /> GitHub
-            </a>
           )}
-          {project.live && (
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[var(--primary)] text-[#020617] font-semibold"
-            >
-              <HiExternalLink /> Live Demo
-            </a>
-          )}
+          <div className="flex flex-wrap gap-2 mb-6">
+            {project.tech.map((t) => (
+              <span
+                key={t}
+                className="text-xs px-2.5 py-1 rounded-md bg-white/[0.04] text-[var(--muted)] border border-white/[0.06]"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-3">
+            {project.github && (
+              <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn-secondary text-xs py-2.5">
+                <FaGithub size={14} /> GitHub
+              </a>
+            )}
+            {project.live && (
+              <a href={project.live} target="_blank" rel="noopener noreferrer" className="btn-primary text-xs py-2.5">
+                <HiExternalLink size={14} /> Live Demo
+              </a>
+            )}
+          </div>
+          <button type="button" onClick={onClose} className="mt-4 w-full py-2.5 text-xs text-[var(--muted)] hover:text-white">
+            Close
+          </button>
         </div>
-
-        <button
-          onClick={onClose}
-          className="mt-6 w-full py-3 text-sm text-[var(--muted)] hover:text-white transition-colors"
-        >
-          Close
-        </button>
       </motion.div>
     </motion.div>
   );
@@ -172,25 +258,68 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
 export function Projects() {
   const [selected, setSelected] = useState<Project | null>(null);
 
+  const flagship = projects[0];
+  const featuredPair = projects.slice(1, 3);
+  const rest = projects.slice(3);
+
+  const handleOpen = (project: Project) => setSelected(project);
+
+  const selectedCaseStudy = selected ? getCaseStudy(selected.id) : undefined;
+
   return (
-    <section id="projects" className="section-padding relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--accent)]/5 to-transparent pointer-events-none" />
+    <section id="projects" className="section-padding relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative">
         <SectionHeader
-          label="Projects"
-          title="Featured work"
-          description="Production business applications shipped end-to-end."
+          label="Selected Work"
+          title="Products I've shipped"
+          description="End-to-end applications built for real businesses — with architecture, impact, and production outcomes."
         />
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {projects.map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} onSelect={setSelected} />
-          ))}
+        <div className="space-y-6 sm:space-y-8">
+          <ProductCard
+            project={flagship}
+            size="flagship"
+            index={0}
+            onOpen={handleOpen}
+          />
+
+          <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+            {featuredPair.map((project, i) => (
+              <ProductCard
+                key={project.id}
+                project={project}
+                size="large"
+                index={i + 1}
+                onOpen={handleOpen}
+              />
+            ))}
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {rest.map((project, i) => (
+              <ProductCard
+                key={project.id}
+                project={project}
+                size="standard"
+                index={i + 3}
+                onOpen={handleOpen}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
       <AnimatePresence>
-        {selected && <ProjectModal project={selected} onClose={() => setSelected(null)} />}
+        {selected && selectedCaseStudy && (
+          <CaseStudyModal
+            project={selected}
+            caseStudy={selectedCaseStudy}
+            onClose={() => setSelected(null)}
+          />
+        )}
+        {selected && !selectedCaseStudy && (
+          <ProjectDetailModal project={selected} onClose={() => setSelected(null)} />
+        )}
       </AnimatePresence>
     </section>
   );

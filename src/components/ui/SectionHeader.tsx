@@ -4,29 +4,26 @@ interface SectionHeaderProps {
   label: string;
   title: string;
   description?: string;
+  align?: "left" | "center";
 }
 
-export function SectionHeader({ label, title, description }: SectionHeaderProps) {
+export function SectionHeader({ label, title, description, align = "left" }: SectionHeaderProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6 }}
-      className="mb-16 max-w-2xl"
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.4 }}
+      className={`mb-10 sm:mb-14 max-w-2xl ${align === "center" ? "mx-auto text-center" : ""}`}
     >
-      <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--primary)] mb-4">
-        <span className="w-8 h-px bg-[var(--primary)]" />
+      <span className="inline-block text-xs font-medium uppercase tracking-[0.15em] text-[var(--muted)] mb-3">
         {label}
       </span>
-      <h2
-        className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-white mb-3">
         {title}
       </h2>
       {description && (
-        <p className="text-[var(--muted)] text-lg leading-relaxed">{description}</p>
+        <p className="text-[var(--muted)] text-base leading-relaxed">{description}</p>
       )}
     </motion.div>
   );

@@ -12,8 +12,7 @@ const categoryLabels: Record<string, string> = {
 
 export function Skills() {
   return (
-    <section id="skills" className="section-padding relative bg-[#020617]">
-      <div className="absolute inset-0 bg-gradient-to-b from-[var(--primary)]/5 via-transparent to-transparent pointer-events-none" />
+    <section id="skills" className="section-padding relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative">
         <SectionHeader
           label="Skills"
@@ -29,7 +28,7 @@ export function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="glass rounded-2xl p-5 group hover:border-[var(--primary)]/30 transition-all duration-300"
+              className="surface-card p-5 sm:p-6"
             >
               <div className="flex justify-between items-start mb-4">
                 <div>
