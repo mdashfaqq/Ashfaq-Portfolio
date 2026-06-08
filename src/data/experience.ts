@@ -9,7 +9,7 @@ export const experience: ExperienceItem[] = [
   {
     role: "Software Development Engineer Intern",
     company: "DaaSoft IT Solutions",
-    duration: "January 2026 – March 2026",
+    duration: "December 2025 – May 2026",
     responsibilities: [
       "Contributed to full-stack web and mobile application development.",
       "Built scalable backend APIs and authentication systems.",
