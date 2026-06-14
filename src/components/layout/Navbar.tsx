@@ -71,11 +71,12 @@ export function Navbar() {
           >
             GitHub
           </a>
+
 <button
   onClick={() => {
     setShowResume(true);
   }}
-  className="btn-primary text-xs py-2 px-4"
+  className="btn-primary text-xs py-2 px-4 ml-3"
 >
   Resume
 </button>
