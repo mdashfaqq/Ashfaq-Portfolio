@@ -42,7 +42,7 @@ export function Hero() {
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
               </span>
               <span className="text-[10px] sm:text-xs text-[var(--muted)] leading-snug break-words">
-                Open to opportunities · {profile.location}
+                Open to Opportunities • {profile.location}
               </span>
             </motion.div>
 
