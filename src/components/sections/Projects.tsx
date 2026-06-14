@@ -104,13 +104,13 @@ function ProductCard({
                 : "aspect-[16/10]"
           }`}
         >
-          <img
-            src={project.image}
-            alt={project.title}
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-          />
+<img
+  src={project.image}
+  alt={project.title}
+  loading="lazy"
+  decoding="async"
+  className="w-full h-full object-contain object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+/>
           <div className="absolute inset-0 bg-gradient-to-t from-[#09090b]/70 via-transparent to-transparent lg:from-transparent lg:via-transparent lg:to-transparent" />
           {project.live && (
             <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2 py-1 rounded-full bg-black/45 backdrop-blur-md border border-emerald-500/20">
@@ -204,11 +204,11 @@ function ProjectDetailModal({
       >
         {project.image && (
           <div className="aspect-video bg-[#0f0f12] overflow-hidden rounded-t-2xl">
-            <img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-full object-cover object-top"
-            />
+<img
+  src={project.image}
+  alt={project.title}
+  className="w-full h-full object-contain object-center"
+/>
           </div>
         )}
         <div className="p-5 sm:p-8">
