@@ -198,6 +198,67 @@ export const projects: Project[] = [
     github: "https://github.com/mdashfaqq/UNReadymades-Online-Fabric-Shopping",
     featured: true,
   },
+// {
+//   id: "ai-appointment-system",
+//   title: "AI Appointment System",
+//   highlight: "WhatsApp-based AI Scheduling Platform",
+//   impact: "Automates appointment booking, rescheduling, and cancellations through natural language conversations on WhatsApp",
+//   description:
+//     "An AI-powered appointment management platform that enables customers to book, reschedule, and cancel appointments directly through WhatsApp. The system understands natural language, checks real-time availability, prevents double bookings, and manages appointments automatically through an admin dashboard.",
+
+//   category: "web",
+//   platformLabel: "AI SaaS Platform",
+
+//   tech: [
+//     "Node.js",
+//     "Express.js",
+//     "MySQL",
+//     "Groq API",
+//     "Llama 3.3 70B",
+//     "Twilio WhatsApp API",
+//     "REST API"
+//   ],
+
+//   features: [
+//     "AI-Powered Natural Language Booking",
+//     "WhatsApp Appointment Scheduling",
+//     "Appointment Rescheduling",
+//     "Appointment Cancellation",
+//     "Real-Time Slot Availability",
+//     "Double Booking Prevention",
+//     "Session-Based Conversations",
+//     "Admin Dashboard",
+//     "Service Management",
+//     "Staff Management",
+//     "Schedule Management",
+//     "Automated Reminder System"
+//   ],
+
+//   outcomes: [
+//     "Eliminated manual appointment handling",
+//     "Enabled booking directly through WhatsApp",
+//     "Reduced scheduling conflicts through overlap detection",
+//     "Automated customer appointment workflows",
+//     "Improved operational efficiency for service businesses"
+//   ],
+
+//   architecture: [
+//     "WhatsApp Customer Interface",
+//     "Twilio Webhook Integration",
+//     "Groq LLM Intent Extraction",
+//     "Node.js Booking Engine",
+//     "MySQL Appointment Database",
+//     "Admin Management Dashboard",
+//     "Automated Reminder Service"
+//   ],
+
+//   live: "",
+//   image: "/ai-appointment-system.webp",
+//   github: "https://github.com/yourusername/ai-appointment-system",
+
+//   featured: true
+// }
+
 ];
 
 export const categoryLabels: Record<ProjectCategory, string> = {
