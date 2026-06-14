@@ -117,7 +117,7 @@ export function Navbar() {
           )}
         </AnimatePresence>
       </header>
-  )
+  
       {/* OUTSIDE THE HEADER */}
       <AnimatePresence>
         {showResume && (
