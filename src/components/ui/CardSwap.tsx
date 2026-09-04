@@ -148,15 +148,16 @@ export default function CardSwap({
 
   const rendered = childArray.map((child, index) => {
     if (!isValidElement(child)) return child;
-    return cloneElement(child, {
+    const childElement = child as React.ReactElement<any>;
+    return cloneElement(childElement, {
       key: index,
       ref: refs[index],
-      style: { width, height, ...(child.props.style as CSSProperties | undefined) },
+      style: { width, height, ...(childElement.props?.style as CSSProperties | undefined) },
       onClick: (event: React.MouseEvent<HTMLDivElement>) => {
-        child.props.onClick?.(event);
+        childElement.props?.onClick?.(event);
         onCardClick?.(index);
       },
-    });
+    } as any);
   });
 
   return (

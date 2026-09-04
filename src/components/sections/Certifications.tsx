@@ -1,32 +1,12 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  HiBadgeCheck,
   HiShieldCheck,
-  HiAcademicCap,
 } from "react-icons/hi";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { DocumentViewer } from "@/components/ui/DocumentViewer";
 import HowItWorks from "@/components/ui/how-it-works";
 import { certifications, type Certification } from "@/data/certifications";
-
-const verificationStyles: Record<
-  Certification["verificationLevel"],
-  { badge: string; icon: typeof HiShieldCheck }
-> = {
-  industry: {
-    badge: "text-blue-300/80 bg-blue-500/[0.08] border-blue-500/15",
-    icon: HiShieldCheck,
-  },
-  verified: {
-    badge: "text-emerald-300/80 bg-emerald-500/[0.08] border-emerald-500/15",
-    icon: HiBadgeCheck,
-  },
-  professional: {
-    badge: "text-violet-300/80 bg-violet-500/[0.08] border-violet-500/15",
-    icon: HiAcademicCap,
-  },
-};
 
 const footerItems = [
   `${certifications.length} Verified Certifications`,

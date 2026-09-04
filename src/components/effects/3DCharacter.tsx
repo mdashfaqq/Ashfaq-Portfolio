@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls, Environment, Float, PerspectiveCamera, ContactShadows } from "@react-three/drei";
+import { Environment, Float, PerspectiveCamera, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
 
 // Animated 3D Character Component

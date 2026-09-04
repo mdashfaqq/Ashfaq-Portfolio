@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useCallback } from "react";
+import { Suspense, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiArrowDown, HiOutlineMail } from "react-icons/hi";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
@@ -8,22 +8,12 @@ import { getPlatformLabel } from "@/data/projects";
 import { TypingHeadline } from "@/components/ui/TypingHeadline";
 import { Character3D } from "@/components/effects/3DCharacter";
 
-const HeroShowcase = lazy(() =>
-  import("@/components/effects/HeroShowcase").then((m) => ({ default: m.HeroShowcase })),
-);
-
 export function Hero() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-  const [isPaused, setIsPaused] = useState(false);
+  const [activeIndex] = useState(0);
+  const [hoverIndex] = useState<number | null>(null);
 
   const displayIndex = hoverIndex ?? activeIndex;
   const previewProject = heroShowcaseProjects[displayIndex];
-
-  const handleSelect = useCallback((index: number) => {
-    setActiveIndex(index);
-    setHoverIndex(null);
-  }, []);
 
   return (
     <section className="relative min-h-screen lg:min-h-[100dvh] flex items-center overflow-x-clip mesh-bg">

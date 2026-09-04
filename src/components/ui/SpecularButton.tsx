@@ -248,7 +248,7 @@ export const SpecularButton: React.FC<SpecularButtonProps> = ({
 
       idleAngle += p.speed * dt;
       const steer = p.followMouse && pointerAngle != null && (!p.autoAnimate || proximityT > 0);
-      const targetA = steer ? pointerAngle : idleAngle;
+      const targetA = (steer && pointerAngle != null) ? pointerAngle : idleAngle;
       const diff = ((targetA - angle + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
       angle += diff * (1 - Math.exp(-dt * 7));
 

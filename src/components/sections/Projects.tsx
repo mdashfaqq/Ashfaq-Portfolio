@@ -8,7 +8,7 @@ import { CaseStudyModal } from "@/components/projects/CaseStudyModal";
 import { CoverflowCarousel } from "@/components/ui/coverflow-carousel";
 import { SpecularButton } from "@/components/ui/SpecularButton";
 import { projects, type Project } from "@/data/projects";
-import { getCaseStudy, hasCaseStudy } from "@/data/caseStudies";
+import { getCaseStudy } from "@/data/caseStudies";
 
 function ProjectDetailModal({
   project,

@@ -1,9 +1,12 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
+import type { CSSProperties } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import type { MotionValue } from 'framer-motion';
 
 interface AnimatedTextProps {
   text: string;
   className?: string;
+  style?: CSSProperties;
 }
 
 function AnimatedChar({ 
@@ -33,7 +36,7 @@ function AnimatedChar({
   );
 }
 
-export function AnimatedText({ text, className = '' }: AnimatedTextProps) {
+export function AnimatedText({ text, className = '', style }: AnimatedTextProps) {
   const containerRef = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -41,7 +44,7 @@ export function AnimatedText({ text, className = '' }: AnimatedTextProps) {
   });
 
   return (
-    <p ref={containerRef} className={className}>
+    <p ref={containerRef} className={className} style={style}>
       {text.split('').map((char, i) => (
         <AnimatedChar
           key={i}

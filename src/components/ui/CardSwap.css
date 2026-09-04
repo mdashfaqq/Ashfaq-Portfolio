@@ -30,16 +30,27 @@
 
 @media (max-width: 640px) {
   .card-swap-container {
-    height: 320px !important;
     width: 100% !important;
-    max-width: 340px !important;
-    margin-top: 2rem !important;
+    max-width: 330px !important;
+    height: 310px !important;
+    margin: 2.75rem auto 2rem auto !important;
   }
 
   .card-swap-card {
-    width: min(100%, 320px) !important;
-    height: 280px !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    height: 270px !important;
     padding: 1.25rem !important;
-    box-sizing: border-box;
+  }
+
+  .card-swap-card h3 {
+    font-size: 1.35rem !important;
+    margin-top: 1rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .card-swap-card p {
+    font-size: 0.82rem !important;
+    line-height: 1.4 !important;
   }
 }

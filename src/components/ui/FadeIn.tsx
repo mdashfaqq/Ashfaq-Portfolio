@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import { ReactNode, HTMLAttributes } from 'react';
+import type { ReactNode, HTMLAttributes } from 'react';
 
-interface FadeInProps extends HTMLAttributes<'div'> {
+interface FadeInProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onAnimationStart' | 'onDrag' | 'onDragStart' | 'onDragEnd'> {
   children: ReactNode;
   delay?: number;
   duration?: number;
