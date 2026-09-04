@@ -5,6 +5,7 @@ import { FaGithub } from "react-icons/fa";
 import type { Project } from "@/data/projects";
 import type { CaseStudy } from "@/data/caseStudies";
 import { ProjectPlatformBadge } from "@/components/ui/PlatformBadge";
+import { SpecularButton } from "@/components/ui/SpecularButton";
 
 interface CaseStudyModalProps {
   project: Project;
@@ -199,31 +200,53 @@ export function CaseStudyModal({ project, caseStudy, onClose }: CaseStudyModalPr
             </div>
           </div>
 
-          <div className="shrink-0 flex flex-wrap gap-3 px-5 sm:px-8 py-4 border-t border-white/[0.08] bg-[#0c0c0e]/80">
+          <div className="shrink-0 flex flex-wrap items-center gap-3 px-5 sm:px-8 py-4 border-t border-white/[0.08] bg-[#0c0c0e]/80">
             {project.github && (
-              <a
+              <SpecularButton
+                as="a"
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-secondary text-xs py-2.5 flex-1 sm:flex-none justify-center"
+                size="sm"
+                radius={12}
+                tint="#d8c5a3"
+                tintOpacity={0.06}
+                blur={8}
+                textColor="#d8c5a3"
+                lineColor="#e8d5b5"
+                baseColor="#3a3227"
+                intensity={1.1}
+                followMouse
               >
-                <FaGithub size={14} /> GitHub
-              </a>
+                <FaGithub size={14} />
+                <span>GitHub</span>
+              </SpecularButton>
             )}
             {project.live && (
-              <a
+              <SpecularButton
+                as="a"
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary text-xs py-2.5 flex-1 sm:flex-none justify-center"
+                size="sm"
+                radius={12}
+                tint="#d8c5a3"
+                tintOpacity={0.16}
+                blur={8}
+                textColor="#f5e6cc"
+                lineColor="#f3e5cb"
+                baseColor="#735d3d"
+                intensity={1.4}
+                followMouse
               >
-                <HiExternalLink size={14} /> Live Demo
-              </a>
+                <HiExternalLink size={14} />
+                <span>Live Demo</span>
+              </SpecularButton>
             )}
             <button
               type="button"
               onClick={onClose}
-              className="btn-secondary text-xs py-2.5 w-full sm:w-auto sm:ml-auto"
+              className="btn-secondary text-xs py-2 px-4 rounded-xl ml-auto"
             >
               Close
             </button>

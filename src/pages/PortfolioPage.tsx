@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { Hero } from "@/components/sections/Hero";
+import { HeroSection } from "@/components/sections/HeroSection";
 
 const Projects = lazy(() =>
   import("@/components/sections/Projects").then((m) => ({
@@ -46,7 +46,7 @@ export function PortfolioPage() {
       <Navbar />
 
       <main>
-        <Hero />
+        <HeroSection />
 
         <Suspense fallback={null}>
           <div className="section-divider max-w-7xl mx-auto" />

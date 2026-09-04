@@ -6,6 +6,7 @@ import { profile } from "@/data/profile";
 import { heroShowcaseProjects } from "@/data/hero";
 import { getPlatformLabel } from "@/data/projects";
 import { TypingHeadline } from "@/components/ui/TypingHeadline";
+import { Character3D } from "@/components/effects/3DCharacter";
 
 const HeroShowcase = lazy(() =>
   import("@/components/effects/HeroShowcase").then((m) => ({ default: m.HeroShowcase })),
@@ -167,14 +168,19 @@ export function Hero() {
                 <div className="w-full max-w-full aspect-[4/3] sm:min-h-[300px] rounded-2xl border border-white/[0.06] bg-white/[0.02] animate-pulse" />
               }
             >
-              <HeroShowcase
-                activeIndex={activeIndex}
-                displayIndex={displayIndex}
-                onSelect={handleSelect}
-                onHover={setHoverIndex}
-                isPaused={isPaused}
-                onPauseChange={setIsPaused}
-              />
+              <div className="relative w-full aspect-[4/3] sm:min-h-[400px] lg:min-h-[500px] rounded-2xl border border-white/[0.08] bg-gradient-to-br from-purple-900/20 to-blue-900/20 overflow-hidden">
+                <Character3D />
+                
+                {/* Decorative elements */}
+                <div className="absolute top-4 right-4 w-20 h-20 bg-purple-500/10 rounded-full blur-xl animate-pulse" />
+                <div className="absolute bottom-4 left-4 w-16 h-16 bg-blue-500/10 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }} />
+                
+                {/* Interactive hint */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/40 text-xs flex items-center gap-2">
+                  <span className="w-2 h-2 bg-white/40 rounded-full animate-bounce" />
+                  Move to interact
+                </div>
+              </div>
             </Suspense>
           </motion.div>
         </div>

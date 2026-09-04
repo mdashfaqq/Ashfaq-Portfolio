@@ -1,20 +1,13 @@
 export interface SkillItem {
   name: string;
-  level: number;
-  category: "frontend" | "backend" | "database" | "tools" | "security";
+  level?: number;
+  category: "languages" | "frameworks" | "tools" | "security" | "core";
 }
 
 export const skills: SkillItem[] = [
-  { name: "React", level: 88, category: "frontend" },
-  { name: "Flutter", level: 90, category: "frontend" },
-  { name: "PHP", level: 92, category: "backend" },
-  { name: "JavaScript", level: 85, category: "frontend" },
-  { name: "TypeScript", level: 80, category: "frontend" },
-  { name: "MySQL", level: 88, category: "database" },
-  { name: "Java", level: 78, category: "backend" },
-  { name: "Python", level: 74, category: "backend" },
-  { name: "Git", level: 90, category: "tools" },
-  { name: "Linux", level: 82, category: "tools" },
-  { name: "REST APIs", level: 92, category: "backend" },
-  { name: "JWT Authentication", level: 88, category: "security" },
+  ...["Java", "Python", "JavaScript", "TypeScript", "SQL", "Dart", "C++"].map((name) => ({ name, category: "languages" as const })),
+  ...["React", "Flutter", "Node.js", "FastAPI", "Tailwind CSS", "Capacitor"].map((name) => ({ name, category: "frameworks" as const })),
+  ...["Git", "GitHub", "Postman", "Docker", "Linux (RHEL, Ubuntu)", "Kali Linux", "CI/CD"].map((name) => ({ name, category: "tools" as const })),
+  ...["OWASP Top 10", "JWT", "REST API Security", "RBAC", "Burp Suite", "Wireshark", "Nmap", "Nessus", "Metasploit"].map((name) => ({ name, category: "security" as const })),
+  ...["Data Structures and Algorithms", "OOP", "DBMS", "Computer Networks", "Operating Systems"].map((name) => ({ name, category: "core" as const })),
 ];

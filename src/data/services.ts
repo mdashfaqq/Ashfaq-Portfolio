@@ -1,32 +1,32 @@
 export const services = [
   {
-    title: "Full Stack Development",
-    description: "End-to-end web applications with modern frontends and robust backends.",
+    title: "From Workflow to Working Product",
+    description: "Turn a messy business process into a focused web or mobile product that teams can actually use every day.",
     icon: "stack",
   },
   {
-    title: "Mobile App Development",
-    description: "Cross-platform Flutter apps with native performance and polish.",
+    title: "Mobile Operations Apps",
+    description: "Flutter apps for POS, education, field teams, and internal operations, with practical flows instead of demo-only screens.",
     icon: "mobile",
   },
   {
-    title: "REST API Development",
-    description: "Scalable, documented APIs with clean architecture and security.",
+    title: "Multi-Tenant SaaS Foundations",
+    description: "Tenant-aware architecture, role-based permissions, and data boundaries designed for products serving multiple organizations.",
     icon: "api",
   },
   {
-    title: "Backend Systems",
-    description: "PHP backends, MySQL databases, and production-grade data layers.",
+    title: "Configurable Workflow Engines",
+    description: "Build forms, approval paths, and business workflows that users can configure without changing the code for every variation.",
     icon: "server",
   },
   {
-    title: "Deployment & Hosting",
-    description: "Linux deployment, cloud hosting, and production-ready delivery.",
-    icon: "cloud",
+    title: "Security-First API Layers",
+    description: "Authentication, authorization, RBAC, validation, and secure REST APIs built into the product from the start.",
+    icon: "shield",
   },
   {
-    title: "Authentication Systems",
-    description: "JWT-based auth, role-based access, and secure user flows.",
-    icon: "shield",
+    title: "Production Launch Support",
+    description: "Move from local development to a reliable live deployment with database setup, Linux hosting, testing, and release support.",
+    icon: "cloud",
   },
 ];

@@ -25,8 +25,8 @@ export function Services() {
       <div className="max-w-7xl mx-auto">
         <SectionHeader
           label="Services"
-          title="What I deliver"
-          description="End-to-end product development from concept to production deployment."
+          title="Useful software, not just interfaces"
+          description="I build the systems behind real operations: products that manage people, workflows, data, and the work that happens after launch."
         />
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -3,11 +3,11 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { skills } from "@/data/skills";
 
 const categoryLabels: Record<string, string> = {
-  frontend: "Frontend",
-  backend: "Backend",
-  database: "Database",
-  tools: "Tools",
+  languages: "Languages",
+  frameworks: "Frameworks",
+  tools: "Tools & DevOps",
   security: "Security",
+  core: "Core",
 };
 
 export function Skills() {
@@ -39,17 +39,21 @@ export function Skills() {
                     {categoryLabels[skill.category]}
                   </span>
                 </div>
-                <span className="text-lg font-bold text-gradient">{skill.level}%</span>
+                {skill.level !== undefined && (
+                  <span className="text-lg font-bold text-gradient">{skill.level}%</span>
+                )}
               </div>
-              <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1, delay: 0.2 + i * 0.03, ease: "easeOut" }}
-                  className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--accent)]"
-                />
-              </div>
+              {skill.level !== undefined && (
+                <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${skill.level}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, delay: 0.2 + i * 0.03, ease: "easeOut" }}
+                    className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--accent)]"
+                  />
+                </div>
+              )}
             </motion.div>
           ))}
         </div>
