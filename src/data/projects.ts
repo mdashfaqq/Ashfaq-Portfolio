@@ -161,6 +161,7 @@ export const projects: Project[] = [
       "Offline-Only — No Cloud",
     ],
     image: "/Offlinedocs.webp",
+    live: "https://play.google.com/store/apps/details?id=com.offlinedocs.app&pcampaignid=web_share",
     github: "https://github.com/mdashfaqq/OfflineDocs-Offline-Document-Oraganizer-",
     featured: true,
   },
