@@ -11,6 +11,11 @@
 
 .bounceCardsContainer .bounce-card {
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
   will-change: transform;
   transform-style: preserve-3d;
   cursor: pointer;
@@ -57,8 +62,8 @@
 @media (max-width: 640px) {
   .bounceCardsContainer {
     width: 100% !important;
-    max-width: 360px !important;
-    height: 300px !important;
+    max-width: 340px !important;
+    height: 280px !important;
     margin: 0.5rem auto !important;
     overflow: visible !important;
   }
@@ -68,9 +73,9 @@
   }
 
   .bounceCardsContainer .bounce-card-content {
-    width: 310px !important;
+    width: min(295px, 86vw) !important;
     max-width: 86vw !important;
-    height: 255px !important;
+    height: 245px !important;
   }
 }
 

@@ -90,6 +90,8 @@ export default function BounceCards({
     }
   };
 
+  const isMountedRef = useRef(false);
+
   const pushSiblings = (hoveredIdx: number) => {
     if (!containerRef.current) return;
 
@@ -106,6 +108,7 @@ export default function BounceCards({
         gsap.to(target, {
           transform: noRotationTransform,
           scale: 1.04,
+          opacity: 1,
           zIndex: 25,
           duration: 0.38,
           ease: "back.out(1.4)",
@@ -121,6 +124,7 @@ export default function BounceCards({
         gsap.to(target, {
           transform: pushedTransform,
           scale: 0.95,
+          opacity: 1,
           zIndex: i + 1,
           duration: 0.38,
           ease: "back.out(1.4)",
@@ -143,6 +147,7 @@ export default function BounceCards({
       gsap.to(target, {
         transform: baseTransform,
         scale: 1,
+        opacity: 1,
         zIndex: i + 1,
         duration: 0.38,
         ease: "back.out(1.4)",
@@ -152,6 +157,10 @@ export default function BounceCards({
   };
 
   useEffect(() => {
+    if (!isMountedRef.current) {
+      isMountedRef.current = true;
+      return;
+    }
     if (activeIdx !== null && activeIdx !== undefined) {
       pushSiblings(activeIdx);
     } else {

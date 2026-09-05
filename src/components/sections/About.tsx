@@ -11,9 +11,9 @@ const desktopTransforms = [
 ];
 
 const mobileTransforms = [
-  "rotate(-5deg) translate(-22px, -8px)",
+  "rotate(-5deg) translate(-18px, -6px)",
   "rotate(0deg) translate(0px, 0px)",
-  "rotate(5deg) translate(22px, 8px)",
+  "rotate(5deg) translate(18px, 6px)",
 ];
 
 const cardsData = [
@@ -41,7 +41,9 @@ const cardsData = [
 ];
 
 export function About() {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth < 640 : false
+  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -86,16 +88,16 @@ export function About() {
             {/* Stacked BounceCards (both Desktop and Mobile) */}
             <BounceCards
               className="about-bounce-cards"
-              containerWidth={isMobile ? 330 : 560}
-              containerHeight={isMobile ? 290 : 360}
-              cardWidth={isMobile ? 305 : 370}
-              cardHeight={isMobile ? 250 : 285}
-              animationDelay={0.35}
+              containerWidth={isMobile ? 320 : 560}
+              containerHeight={isMobile ? 280 : 360}
+              cardWidth={isMobile ? 295 : 370}
+              cardHeight={isMobile ? 245 : 285}
+              animationDelay={0.25}
               animationStagger={0.08}
               easeType="elastic.out(1, 0.6)"
               transformStyles={transformStyles}
               enableHover={true}
-              pushDistance={isMobile ? 55 : 120}
+              pushDistance={isMobile ? 35 : 120}
             >
               {cardsData.map((card) => (
                 <div
