@@ -4,6 +4,7 @@ import { HiX, HiExternalLink, HiDownload, HiDocumentText } from "react-icons/hi"
 
 interface DocumentViewerProps {
   url: string;
+  externalUrl?: string;
   title: string;
   documentType?: "PDF" | "Image";
   issuer?: string;
@@ -17,6 +18,7 @@ function isPdf(url: string) {
 
 export function DocumentViewer({
   url,
+  externalUrl,
   title,
   documentType,
   issuer,
@@ -85,7 +87,7 @@ export function DocumentViewer({
           </div>
           <div className="flex items-center gap-1 shrink-0">
             <a
-              href={url}
+              href={externalUrl || url}
               target="_blank"
               rel="noopener noreferrer"
               className="p-2.5 rounded-lg text-[var(--muted)] hover:text-white hover:bg-white/[0.06] transition-colors touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"

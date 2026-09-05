@@ -37,6 +37,23 @@ export const certifications: Certification[] = [
     featured: true,
   },
   {
+    id: "ieee-conf",
+    title: "IEEE ASIACONF",
+    fullTitle: "Asia Conference on Innovation in Emerging Technology (ASIACONF-2026)",
+    summary:
+      "Presented research paper: 'Adaptive Multi-Stage Intrusion Detection with Temporal Attack Characterization for UAV CAN Networks' at IEEE ASIACONF-2026.",
+    issuer: "IEEE Maharashtra Section",
+    issuerCategory: "IEEE International Conference",
+    year: "2026",
+    certificateUrl: "/certificates/IEEE_Conf.pdf",
+    credentialType: "Conference Paper Presentation",
+    verificationLabel: "IEEE Conference Credential",
+    verificationLevel: "industry",
+    documentType: "PDF",
+    skills: ["Intrusion Detection", "UAV Security", "CAN Networks", "Cybersecurity"],
+    featured: true,
+  },
+  {
     id: "cpp-essentials",
     title: "C++ Essentials",
     fullTitle: "C++ Essentials Professional Certificate",

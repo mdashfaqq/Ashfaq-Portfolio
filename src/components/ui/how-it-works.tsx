@@ -19,11 +19,11 @@ export interface HowItWorksProps {
 }
 
 const positions = [
-  { className: "md:absolute md:top-0 md:left-[15%]", rotate: "rotate-3" },
-  { className: "md:absolute md:top-[120px] md:right-[15%]", rotate: "-rotate-3" },
-  { className: "md:absolute md:top-[450px] md:left-[15%]", rotate: "rotate-3" },
-  { className: "md:absolute md:top-[570px] md:right-[10%]", rotate: "-rotate-3" },
-  { className: "md:absolute md:top-[850px] md:left-[15%]", rotate: "rotate-3" },
+  { className: "md:absolute md:top-0 md:left-[12%]", rotate: "rotate-3" },
+  { className: "md:absolute md:top-[80px] md:right-[12%]", rotate: "-rotate-3" },
+  { className: "md:absolute md:top-[420px] md:left-[28%]", rotate: "rotate-2" },
+  { className: "md:absolute md:top-[640px] md:right-[10%]", rotate: "-rotate-3" },
+  { className: "md:absolute md:top-[900px] md:left-[15%]", rotate: "rotate-3" },
 ];
 
 function Pin({ className }: { className?: string }) {
@@ -41,7 +41,7 @@ const defaultColors = {
 };
 
 export default function HowItWorks({ features, className, onStepClick }: HowItWorksProps) {
-  const height = features.length > 2 ? 620 : features.length === 2 ? 390 : 260;
+  const height = features.length > 2 ? 760 : features.length === 2 ? 390 : 260;
 
   return (
     <div className={`relative overflow-hidden px-2 py-8 sm:px-5 md:py-12 ${className ?? ""}`}>
@@ -61,7 +61,7 @@ export default function HowItWorks({ features, className, onStepClick }: HowItWo
               preserveAspectRatio="none"
               aria-hidden="true"
             >
-              <path d="M 290 150 C 500 150, 550 270, 710 270 C 850 270, 500 350, 290 450" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="8 6" />
+              <path d="M 290 150 C 500 150, 550 250, 710 250 C 860 250, 520 400, 320 520" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="8 6" />
             </svg>
           )}
 

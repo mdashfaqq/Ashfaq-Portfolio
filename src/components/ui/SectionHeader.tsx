@@ -5,16 +5,23 @@ interface SectionHeaderProps {
   title: string;
   description?: string;
   align?: "left" | "center";
+  className?: string;
 }
 
-export function SectionHeader({ label, title, description, align = "left" }: SectionHeaderProps) {
+export function SectionHeader({
+  label,
+  title,
+  description,
+  align = "left",
+  className = "",
+}: SectionHeaderProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.4 }}
-      className={`mb-10 sm:mb-14 max-w-2xl ${align === "center" ? "mx-auto text-center" : ""}`}
+      className={`mb-10 sm:mb-14 max-w-2xl ${align === "center" ? "mx-auto text-center" : ""} ${className}`.trim()}
     >
       <span className="inline-block text-xs font-medium uppercase tracking-[0.15em] text-[var(--muted)] mb-3">
         {label}

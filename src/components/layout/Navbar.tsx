@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { DocumentViewer } from "@/components/ui/DocumentViewer";
+import { profile } from "@/data/profile";
 
 const links = [
   { href: "#projects", label: "Work" },
@@ -130,6 +131,7 @@ export function Navbar() {
         {showResume && (
           <DocumentViewer
             url="/resume.pdf"
+            externalUrl={profile.resume}
             title="My Resume"
             onClose={() => setShowResume(false)}
           />
