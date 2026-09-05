@@ -1,4 +1,4 @@
-import { useEffect, useRef, Children, isValidElement, type ReactNode } from "react";
+import { useEffect, useRef, useState, Children, isValidElement, type ReactNode } from "react";
 import { gsap } from "gsap";
 import "./BounceCards.css";
 
@@ -16,6 +16,8 @@ export interface BounceCardsProps {
   transformStyles?: string[];
   enableHover?: boolean;
   pushDistance?: number;
+  activeCardIndex?: number | null;
+  onActiveCardChange?: (index: number | null) => void;
 }
 
 export default function BounceCards({
@@ -35,9 +37,13 @@ export default function BounceCards({
     "rotate(5deg) translate(80px, 12px)"
   ],
   enableHover = true,
-  pushDistance = 110
+  pushDistance = 110,
+  activeCardIndex,
+  onActiveCardChange
 }: BounceCardsProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [internalActiveIdx, setInternalActiveIdx] = useState<number | null>(null);
+  const activeIdx = activeCardIndex !== undefined ? activeCardIndex : internalActiveIdx;
 
   const childElements = children ? Children.toArray(children).filter(isValidElement) : [];
   const itemCount = childElements.length > 0 ? childElements.length : images.length;
@@ -85,7 +91,7 @@ export default function BounceCards({
   };
 
   const pushSiblings = (hoveredIdx: number) => {
-    if (!enableHover || !containerRef.current) return;
+    if (!containerRef.current) return;
 
     const q = gsap.utils.selector(containerRef);
 
@@ -99,8 +105,8 @@ export default function BounceCards({
         const noRotationTransform = getNoRotationTransform(baseTransform);
         gsap.to(target, {
           transform: noRotationTransform,
-          scale: 1.03,
-          zIndex: 20,
+          scale: 1.04,
+          zIndex: 25,
           duration: 0.38,
           ease: "back.out(1.4)",
           overwrite: "auto"
@@ -114,7 +120,7 @@ export default function BounceCards({
 
         gsap.to(target, {
           transform: pushedTransform,
-          scale: 0.96,
+          scale: 0.95,
           zIndex: i + 1,
           duration: 0.38,
           ease: "back.out(1.4)",
@@ -126,7 +132,7 @@ export default function BounceCards({
   };
 
   const resetSiblings = () => {
-    if (!enableHover || !containerRef.current) return;
+    if (!containerRef.current) return;
 
     const q = gsap.utils.selector(containerRef);
 
@@ -142,6 +148,23 @@ export default function BounceCards({
         ease: "back.out(1.4)",
         overwrite: "auto"
       });
+    }
+  };
+
+  useEffect(() => {
+    if (activeIdx !== null && activeIdx !== undefined) {
+      pushSiblings(activeIdx);
+    } else {
+      resetSiblings();
+    }
+  }, [activeIdx, transformStyles]);
+
+  const handleCardClick = (idx: number) => {
+    const nextIdx = activeIdx === idx ? null : idx;
+    if (onActiveCardChange) {
+      onActiveCardChange(nextIdx);
+    } else {
+      setInternalActiveIdx(nextIdx);
     }
   };
 
@@ -167,8 +190,13 @@ export default function BounceCards({
                 height: cardHeight,
                 zIndex: idx + 1
               }}
-              onMouseEnter={() => pushSiblings(idx)}
-              onMouseLeave={resetSiblings}
+              onClick={() => handleCardClick(idx)}
+              onMouseEnter={() => {
+                if (enableHover && activeIdx === null) pushSiblings(idx);
+              }}
+              onMouseLeave={() => {
+                if (enableHover && activeIdx === null) resetSiblings();
+              }}
             >
               {child}
             </div>
@@ -181,8 +209,13 @@ export default function BounceCards({
                 transform: transformStyles[idx] ?? "none",
                 zIndex: idx + 1
               }}
-              onMouseEnter={() => pushSiblings(idx)}
-              onMouseLeave={resetSiblings}
+              onClick={() => handleCardClick(idx)}
+              onMouseEnter={() => {
+                if (enableHover && activeIdx === null) pushSiblings(idx);
+              }}
+              onMouseLeave={() => {
+                if (enableHover && activeIdx === null) resetSiblings();
+              }}
             >
               <img className="image" src={src} alt={`card-${idx}`} />
             </div>

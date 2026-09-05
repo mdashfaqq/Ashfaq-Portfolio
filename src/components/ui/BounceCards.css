@@ -56,23 +56,21 @@
 
 @media (max-width: 640px) {
   .bounceCardsContainer {
-    width: 530px !important;
-    max-width: none !important;
-    height: 290px !important;
-    transform: scale(clamp(0.55, calc((100vw - 36px) / 530), 0.88)) !important;
-    transform-origin: center center;
-    margin: -1rem auto -0.5rem auto !important;
+    width: 100% !important;
+    max-width: 360px !important;
+    height: 300px !important;
+    margin: 0.5rem auto !important;
+    overflow: visible !important;
+  }
+
+  .bounceCardsContainer .bounce-card {
+    touch-action: manipulation;
   }
 
   .bounceCardsContainer .bounce-card-content {
-    width: 320px !important;
-    height: 250px !important;
+    width: 310px !important;
+    max-width: 86vw !important;
+    height: 255px !important;
   }
 }
 
-@media (max-width: 380px) {
-  .bounceCardsContainer {
-    transform: scale(clamp(0.52, calc((100vw - 28px) / 530), 0.65)) !important;
-    margin: -1.75rem auto -1.25rem auto !important;
-  }
-}
