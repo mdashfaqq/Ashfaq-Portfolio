@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   HiX,
   HiExternalLink,
@@ -44,7 +44,6 @@ export function DocumentViewer({
   onClose,
 }: DocumentViewerProps) {
   const isPdfDoc = documentType === "PDF" || isPdf(url);
-  const type = isPdfDoc ? "PDF" : "Image";
 
   // PDF Engine
   const { pdfDoc, numPages, loading, error, progress } = usePdfDocument(
