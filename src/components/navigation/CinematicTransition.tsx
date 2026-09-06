@@ -20,7 +20,49 @@ interface SectionConfig {
 }
 
 const SECTION_CONFIGS: Record<string, SectionConfig> = {
+  "#home": {
+    label: "HOME",
+    number: "00",
+    variant: "work",
+    badge: "OVERVIEW",
+    themePhrase: "MOHAMED ASHFAQ // FULL-STACK ARCHITECT",
+  },
+  "/": {
+    label: "HOME",
+    number: "00",
+    variant: "work",
+    badge: "OVERVIEW",
+    themePhrase: "MOHAMED ASHFAQ // FULL-STACK ARCHITECT",
+  },
+  "home": {
+    label: "HOME",
+    number: "00",
+    variant: "work",
+    badge: "OVERVIEW",
+    themePhrase: "MOHAMED ASHFAQ // FULL-STACK ARCHITECT",
+  },
+  "#hero": {
+    label: "HOME",
+    number: "00",
+    variant: "work",
+    badge: "OVERVIEW",
+    themePhrase: "MOHAMED ASHFAQ // FULL-STACK ARCHITECT",
+  },
   "#projects": {
+    label: "SELECTED WORK",
+    number: "01",
+    variant: "work",
+    badge: "PORTFOLIO & CASE STUDIES",
+    themePhrase: "ENGINEERING DIGITAL PRODUCTS",
+  },
+  "#work": {
+    label: "SELECTED WORK",
+    number: "01",
+    variant: "work",
+    badge: "PORTFOLIO & CASE STUDIES",
+    themePhrase: "ENGINEERING DIGITAL PRODUCTS",
+  },
+  "work": {
     label: "SELECTED WORK",
     number: "01",
     variant: "work",
@@ -34,14 +76,49 @@ const SECTION_CONFIGS: Record<string, SectionConfig> = {
     badge: "CAREER TIMELINE",
     themePhrase: "PRODUCTION PROVEN ARCHITECTURE",
   },
+  "experience": {
+    label: "EXPERIENCE",
+    number: "02",
+    variant: "experience",
+    badge: "CAREER TIMELINE",
+    themePhrase: "PRODUCTION PROVEN ARCHITECTURE",
+  },
   "#about": {
-    label: "ABOUT ASHFAQ",
+    label: "ABOUT ME",
+    number: "03",
+    variant: "about",
+    badge: "BIOGRAPHY & MINDSET",
+    themePhrase: "FULL-STACK DEVELOPER & DESIGNER",
+  },
+  "about": {
+    label: "ABOUT ME",
     number: "03",
     variant: "about",
     badge: "BIOGRAPHY & MINDSET",
     themePhrase: "FULL-STACK DEVELOPER & DESIGNER",
   },
   "#certifications": {
+    label: "CREDENTIALS",
+    number: "04",
+    variant: "credentials",
+    badge: "ACCREDITED HONORS",
+    themePhrase: "VERIFIED INDUSTRY SKILLS",
+  },
+  "#credentials": {
+    label: "CREDENTIALS",
+    number: "04",
+    variant: "credentials",
+    badge: "ACCREDITED HONORS",
+    themePhrase: "VERIFIED INDUSTRY SKILLS",
+  },
+  "credentials": {
+    label: "CREDENTIALS",
+    number: "04",
+    variant: "credentials",
+    badge: "ACCREDITED HONORS",
+    themePhrase: "VERIFIED INDUSTRY SKILLS",
+  },
+  "certifications": {
     label: "CREDENTIALS",
     number: "04",
     variant: "credentials",
@@ -62,7 +139,21 @@ const SECTION_CONFIGS: Record<string, SectionConfig> = {
     badge: "CURRICULUM VITAE",
     themePhrase: "FULL-STACK & APPLICATION SECURITY",
   },
+  "resume": {
+    label: "RESUME",
+    number: "CV",
+    variant: "resume",
+    badge: "CURRICULUM VITAE",
+    themePhrase: "FULL-STACK & APPLICATION SECURITY",
+  },
   "#services": {
+    label: "SERVICES",
+    number: "05",
+    variant: "services",
+    badge: "CORE CAPABILITIES",
+    themePhrase: "END-TO-END SYSTEM ARCHITECTURE",
+  },
+  "services": {
     label: "SERVICES",
     number: "05",
     variant: "services",
@@ -77,6 +168,13 @@ const SECTION_CONFIGS: Record<string, SectionConfig> = {
     themePhrase: "LET'S BUILD SOMETHING EXCEPTIONAL",
   },
   "/#contact": {
+    label: "GET IN TOUCH",
+    number: "06",
+    variant: "contact",
+    badge: "TRANSMISSION & INQUIRY",
+    themePhrase: "LET'S BUILD SOMETHING EXCEPTIONAL",
+  },
+  "contact": {
     label: "GET IN TOUCH",
     number: "06",
     variant: "contact",
@@ -100,6 +198,8 @@ export const navigateToSection: TransitionHandler = (target, label) => {
 export function CinematicTransition() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isTransitioningRef = useRef<boolean>(false);
+  const currentTlRef = useRef<gsap.core.Timeline | null>(null);
+  const failsafeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const [activeConfig, setActiveConfig] = useState<SectionConfig>(
     SECTION_CONFIGS["#projects"]
@@ -150,13 +250,148 @@ export function CinematicTransition() {
   const resumeSheet2Ref = useRef<HTMLDivElement>(null);
   const resumeBadgeRef = useRef<HTMLDivElement>(null);
 
+  // Full reset of all transition elements and GSAP transforms to clean initial state
+  const resetAllTransitionElements = useCallback(() => {
+    if (failsafeTimerRef.current) {
+      clearTimeout(failsafeTimerRef.current);
+      failsafeTimerRef.current = null;
+    }
+    if (currentTlRef.current) {
+      currentTlRef.current.kill();
+      currentTlRef.current = null;
+    }
+
+    const container = containerRef.current;
+    const leadBlade = leadBladeRef.current;
+    const mainStage = mainStageRef.current;
+    const title = titleRef.current;
+    const headerMeta = headerMetaRef.current;
+    const footerMeta = footerMetaRef.current;
+
+    const allAnimatedElements = [
+      container,
+      leadBlade,
+      mainStage,
+      title,
+      headerMeta,
+      footerMeta,
+      workCard1Ref.current,
+      workCard2Ref.current,
+      workCard3Ref.current,
+      expTrackRef.current,
+      ...(expNodeRefs.current || []),
+      aboutOrbitRef.current,
+      aboutMonogramRef.current,
+      credSealRef.current,
+      credRibbonRef.current,
+      resumeSheet1Ref.current,
+      resumeSheet2Ref.current,
+      resumeBadgeRef.current,
+      ...(serviceBlockRefs.current || []),
+      contactBeaconRef.current,
+      contactPromptRef.current,
+    ].filter(Boolean) as HTMLElement[];
+
+    gsap.killTweensOf(allAnimatedElements);
+
+    if (container) {
+      gsap.set(container, { display: "none", pointerEvents: "none" });
+    }
+
+    if (leadBlade) {
+      gsap.set(leadBlade, {
+        xPercent: 0,
+        yPercent: 0,
+        x: 0,
+        y: 0,
+        skewX: 0,
+        skewY: 0,
+        scale: 1,
+        opacity: 1,
+        clearProps: "transform,opacity",
+      });
+    }
+
+    if (mainStage) {
+      gsap.set(mainStage, {
+        xPercent: 0,
+        yPercent: 0,
+        x: 0,
+        y: 0,
+        skewX: 0,
+        skewY: 0,
+        scale: 1,
+        opacity: 1,
+        clearProps: "transform,opacity",
+      });
+    }
+
+    if (title) {
+      gsap.set(title, {
+        xPercent: 0,
+        yPercent: 40,
+        opacity: 0,
+        clearProps: "transform,opacity",
+      });
+    }
+
+    if (headerMeta) {
+      gsap.set(headerMeta, { opacity: 0, y: -10, clearProps: "transform,opacity" });
+    }
+
+    if (footerMeta) {
+      gsap.set(footerMeta, { opacity: 0, y: 10, clearProps: "transform,opacity" });
+    }
+
+    // Hide all graphic variant containers
+    const variantContainers = [
+      workContainerRef.current,
+      expContainerRef.current,
+      aboutContainerRef.current,
+      credContainerRef.current,
+      resumeContainerRef.current,
+      serviceContainerRef.current,
+      contactContainerRef.current,
+    ];
+    variantContainers.forEach((el) => {
+      if (el) el.style.display = "none";
+    });
+
+    // Reset all child elements in graphics
+    const childGraphicElements = [
+      workCard1Ref.current,
+      workCard2Ref.current,
+      workCard3Ref.current,
+      expTrackRef.current,
+      ...(expNodeRefs.current || []),
+      aboutOrbitRef.current,
+      aboutMonogramRef.current,
+      credSealRef.current,
+      credRibbonRef.current,
+      resumeSheet1Ref.current,
+      resumeSheet2Ref.current,
+      resumeBadgeRef.current,
+      ...(serviceBlockRefs.current || []),
+      contactBeaconRef.current,
+      contactPromptRef.current,
+    ].filter(Boolean) as HTMLElement[];
+
+    if (childGraphicElements.length > 0) {
+      gsap.set(childGraphicElements, { clearProps: "transform,opacity" });
+    }
+  }, []);
+
   const runTransition = useCallback((targetId: string, customLabel?: string) => {
+    // Prevent double clicking during transition
     if (isTransitioningRef.current) return;
 
     // Respect prefers-reduced-motion
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       if (targetId === "/resume" || targetId === "/resume/") {
         navigateToRoute("/resume");
+      } else if (targetId === "#home" || targetId === "/" || targetId === "home" || targetId === "#hero") {
+        window.scrollTo({ top: 0, behavior: "auto" });
+        history.pushState(null, "", targetId.startsWith("#") ? targetId : `/${targetId}`);
       } else {
         const targetElement = document.querySelector(targetId.startsWith("#") ? targetId : `#${targetId}`);
         if (targetElement) {
@@ -168,14 +403,17 @@ export function CinematicTransition() {
     }
 
     // Normalize target identifier
-    const isResume = targetId === "/resume" || targetId === "/resume/" || targetId === "#resume";
+    const isResume = targetId === "/resume" || targetId === "/resume/" || targetId === "#resume" || targetId === "resume";
     const isContact = targetId === "#contact" || targetId === "/#contact" || targetId === "contact";
+    const isHome = targetId === "#home" || targetId === "/" || targetId === "home" || targetId === "#hero";
 
     let lookupKey = targetId;
     if (isResume) {
       lookupKey = "/resume";
     } else if (isContact) {
       lookupKey = "#contact";
+    } else if (isHome) {
+      lookupKey = "#home";
     } else if (!targetId.startsWith("#") && !targetId.startsWith("/")) {
       lookupKey = `#${targetId}`;
     }
@@ -192,6 +430,9 @@ export function CinematicTransition() {
       };
 
     setActiveConfig(matchedConfig);
+
+    // Reset all elements from any previous transition before starting new one
+    resetAllTransitionElements();
     isTransitioningRef.current = true;
 
     const container = containerRef.current;
@@ -204,6 +445,8 @@ export function CinematicTransition() {
     if (!container || !leadBlade || !mainStage || !title) {
       if (isResume) {
         navigateToRoute("/resume");
+      } else if (isHome) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         const targetElement = document.querySelector(targetId.startsWith("#") ? targetId : `#${targetId}`);
         if (targetElement) targetElement.scrollIntoView({ behavior: "smooth" });
@@ -256,6 +499,20 @@ export function CinematicTransition() {
         window.location.pathname === "/resume/" ||
         window.location.hash.includes("resume");
 
+      if (isHome) {
+        if (onResumePage) {
+          navigateToRoute("/");
+          setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+            history.pushState(null, "", "/");
+          }, 20);
+          return;
+        }
+        window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+        history.pushState(null, "", "#home");
+        return;
+      }
+
       const sectionHash = targetId.startsWith("#")
         ? targetId
         : targetId.includes("#")
@@ -272,7 +529,7 @@ export function CinematicTransition() {
             const top = el.getBoundingClientRect().top + window.pageYOffset - navbarOffset;
             window.scrollTo({ top: Math.max(0, top), behavior: "instant" as ScrollBehavior });
             history.pushState(null, "", sectionHash);
-          } else if (attempts < 8) {
+          } else if (attempts < 25) {
             attempts++;
             setTimeout(scrollToTarget, 40);
           }
@@ -301,18 +558,18 @@ export function CinematicTransition() {
     };
 
     // Failsafe timer to unlock transition state in case anything unexpected happens
-    const failsafe = setTimeout(() => {
+    failsafeTimerRef.current = setTimeout(() => {
+      resetAllTransitionElements();
       isTransitioningRef.current = false;
-      if (container) gsap.set(container, { display: "none", pointerEvents: "none" });
-    }, 1200);
+    }, 1600);
 
     const tl = gsap.timeline({
       onComplete: () => {
-        clearTimeout(failsafe);
-        gsap.set(container, { display: "none", pointerEvents: "none" });
+        resetAllTransitionElements();
         isTransitioningRef.current = false;
       },
     });
+    currentTlRef.current = tl;
 
     const safeMeta = [headerMeta, footerMeta].filter(Boolean) as HTMLElement[];
 
@@ -322,7 +579,7 @@ export function CinematicTransition() {
     if (footerMeta) tl.set(footerMeta, { opacity: 0, y: 10 });
 
     // =========================================================================
-    // 1. WORK: Fanning Project Preview Cards & Launch Badge
+    // 1. WORK / HOME: Fanning Project Preview Cards & Launch Badge
     // =========================================================================
     if (v === "work") {
       const c1 = workCard1Ref.current;
@@ -330,11 +587,11 @@ export function CinematicTransition() {
       const c3 = workCard3Ref.current;
       const cards = [c1, c2, c3].filter(Boolean) as HTMLElement[];
 
-      tl.set(leadBlade, { xPercent: -101, skewX: -8 });
-      tl.set(mainStage, { xPercent: -101, skewX: -8 });
-      if (c1) tl.set(c1, { scale: 0.6, rotation: -18, opacity: 0, x: -60 });
-      if (c2) tl.set(c2, { scale: 0.6, rotation: 0, opacity: 0, y: 40 });
-      if (c3) tl.set(c3, { scale: 0.6, rotation: 18, opacity: 0, x: 60 });
+      tl.set(leadBlade, { xPercent: -101, yPercent: 0, skewX: -8, skewY: 0, opacity: 1 });
+      tl.set(mainStage, { xPercent: -101, yPercent: 0, skewX: -8, skewY: 0, opacity: 1 });
+      if (c1) tl.set(c1, { scale: 0.6, rotation: -18, opacity: 0, x: -60, y: 0 });
+      if (c2) tl.set(c2, { scale: 0.6, rotation: 0, opacity: 0, x: 0, y: 40 });
+      if (c3) tl.set(c3, { scale: 0.6, rotation: 18, opacity: 0, x: 60, y: 0 });
 
       // IN
       tl.to(leadBlade, { xPercent: 0, skewX: 0, duration: 0.36, ease: "power4.inOut" })
@@ -383,8 +640,8 @@ export function CinematicTransition() {
       const track = expTrackRef.current;
       const nodes = expNodeRefs.current.filter(Boolean) as HTMLElement[];
 
-      tl.set(leadBlade, { yPercent: -101, xPercent: 0, skewX: 0 });
-      tl.set(mainStage, { yPercent: -101, xPercent: 0, skewX: 0 });
+      tl.set(leadBlade, { xPercent: 0, yPercent: -101, skewX: 0, skewY: 0, opacity: 1 });
+      tl.set(mainStage, { xPercent: 0, yPercent: -101, skewX: 0, skewY: 0, opacity: 1 });
       if (track) tl.set(track, { scaleX: 0, transformOrigin: "left center" });
       nodes.forEach((n) => tl.set(n, { scale: 0, opacity: 0 }));
 
@@ -417,8 +674,8 @@ export function CinematicTransition() {
       const orbit = aboutOrbitRef.current;
       const monogram = aboutMonogramRef.current;
 
-      tl.set(leadBlade, { xPercent: -101, skewX: 6 });
-      tl.set(mainStage, { xPercent: -101, skewX: 6 });
+      tl.set(leadBlade, { xPercent: -101, yPercent: 0, skewX: 6, skewY: 0, opacity: 1 });
+      tl.set(mainStage, { xPercent: -101, yPercent: 0, skewX: 6, skewY: 0, opacity: 1 });
       if (orbit) tl.set(orbit, { scale: 0.2, rotation: -90, opacity: 0 });
       if (monogram) tl.set(monogram, { scale: 0.5, opacity: 0 });
 
@@ -451,8 +708,8 @@ export function CinematicTransition() {
       const seal = credSealRef.current;
       const ribbon = credRibbonRef.current;
 
-      tl.set(leadBlade, { xPercent: 101, skewX: -6 });
-      tl.set(mainStage, { xPercent: 101, skewX: -6 });
+      tl.set(leadBlade, { xPercent: 101, yPercent: 0, skewX: -6, skewY: 0, opacity: 1 });
+      tl.set(mainStage, { xPercent: 101, yPercent: 0, skewX: -6, skewY: 0, opacity: 1 });
       if (seal) tl.set(seal, { scale: 1.8, opacity: 0, rotation: 30 });
       if (ribbon) tl.set(ribbon, { scaleX: 0, opacity: 0 });
 
@@ -486,8 +743,8 @@ export function CinematicTransition() {
       const badge = resumeBadgeRef.current;
       const sheets = [s1, s2].filter(Boolean) as HTMLElement[];
 
-      tl.set(leadBlade, { xPercent: 101, skewX: -6 });
-      tl.set(mainStage, { xPercent: 101, skewX: -6 });
+      tl.set(leadBlade, { xPercent: 101, yPercent: 0, skewX: -6, skewY: 0, opacity: 1 });
+      tl.set(mainStage, { xPercent: 101, yPercent: 0, skewX: -6, skewY: 0, opacity: 1 });
       if (s1) tl.set(s1, { scale: 0.6, rotation: -16, opacity: 0, x: -70 });
       if (s2) tl.set(s2, { scale: 0.6, rotation: 16, opacity: 0, x: 70 });
       if (badge) tl.set(badge, { scale: 0, rotation: -45, opacity: 0 });
@@ -539,8 +796,8 @@ export function CinematicTransition() {
     else if (v === "services") {
       const blocks = serviceBlockRefs.current.filter(Boolean) as HTMLElement[];
 
-      tl.set(leadBlade, { yPercent: 101, xPercent: 0, skewX: 0 });
-      tl.set(mainStage, { yPercent: 101, xPercent: 0, skewX: 0 });
+      tl.set(leadBlade, { xPercent: 0, yPercent: 101, skewX: 0, skewY: 0, opacity: 1 });
+      tl.set(mainStage, { xPercent: 0, yPercent: 101, skewX: 0, skewY: 0, opacity: 1 });
       if (blocks.length > 0) {
         blocks.forEach((b, i) => {
           tl.set(b, {
@@ -597,8 +854,8 @@ export function CinematicTransition() {
       const beacon = contactBeaconRef.current;
       const prompt = contactPromptRef.current;
 
-      tl.set(leadBlade, { xPercent: -101, skewX: -6 });
-      tl.set(mainStage, { xPercent: -101, skewX: -6 });
+      tl.set(leadBlade, { xPercent: -101, yPercent: 0, skewX: -6, skewY: 0, opacity: 1 });
+      tl.set(mainStage, { xPercent: -101, yPercent: 0, skewX: -6, skewY: 0, opacity: 1 });
       if (beacon) tl.set(beacon, { scale: 0.3, opacity: 0 });
       if (prompt) tl.set(prompt, { y: 25, opacity: 0 });
 
@@ -622,7 +879,7 @@ export function CinematicTransition() {
       tl.to(mainStage, { xPercent: 101, skewX: -6, duration: 0.38, ease: "power4.inOut" }, "-=0.08")
         .to(leadBlade, { xPercent: 101, skewX: -6, duration: 0.36, ease: "power4.inOut" }, "-=0.32");
     }
-  }, []);
+  }, [resetAllTransitionElements]);
 
   useEffect(() => {
     globalTransitionHandler = runTransition;
@@ -640,6 +897,7 @@ export function CinematicTransition() {
       const isTarget =
         href === "/resume" ||
         href === "/resume/" ||
+        href === "/" ||
         href === "/#contact" ||
         (href.startsWith("#") && href.length > 1);
 
@@ -660,13 +918,16 @@ export function CinematicTransition() {
     return () => {
       globalTransitionHandler = null;
       document.removeEventListener("click", handleDocumentClick);
+      resetAllTransitionElements();
+      isTransitioningRef.current = false;
     };
-  }, [runTransition]);
+  }, [runTransition, resetAllTransitionElements]);
 
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[99999] pointer-events-none hidden select-none overflow-hidden"
+      className="fixed inset-0 z-[99999] pointer-events-none select-none overflow-hidden"
+      style={{ display: "none" }}
       aria-hidden="true"
     >
       {/* 1. Leading Gold Shutter Blade */}

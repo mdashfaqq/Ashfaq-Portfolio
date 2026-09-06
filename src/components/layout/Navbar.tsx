@@ -4,6 +4,7 @@ import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { navigateToSection } from "@/components/navigation/CinematicTransition";
 
 const links = [
+  { href: "#home", label: "Home" },
   { href: "#projects", label: "Work" },
   { href: "#experience", label: "Experience" },
   { href: "#about", label: "About" },

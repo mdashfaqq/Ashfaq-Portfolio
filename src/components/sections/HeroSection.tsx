@@ -3,7 +3,7 @@ import { Magnet } from '../ui/Magnet';
 
 export function HeroSection() {
   return (
-    <section className="h-[100dvh] min-h-[560px] md:min-h-[580px] flex flex-col overflow-x-clip relative">
+    <section id="home" className="h-[100dvh] min-h-[560px] md:min-h-[580px] flex flex-col overflow-x-clip relative">
       {/* Hero Content */}
       <div className="flex-1 flex flex-col justify-end relative min-h-0">
         {/* Hero Heading */}
