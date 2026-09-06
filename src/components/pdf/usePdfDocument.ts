@@ -19,6 +19,56 @@ export interface PDFDocumentState {
   progress: number;
 }
 
+let pdfJsScriptPromise: Promise<void> | null = null;
+
+function loadPdfJsScript(): Promise<void> {
+  if (typeof window !== "undefined" && window.pdfjsLib) {
+    return Promise.resolve();
+  }
+  if (pdfJsScriptPromise) {
+    return pdfJsScriptPromise;
+  }
+
+  pdfJsScriptPromise = new Promise<void>((resolve, reject) => {
+    if (typeof window !== "undefined" && window.pdfjsLib) {
+      resolve();
+      return;
+    }
+
+    const existingScript = document.querySelector<HTMLScriptElement>(
+      `script[src="${PDFJS_SCRIPT_URL}"]`
+    );
+    if (existingScript) {
+      if (window.pdfjsLib) {
+        resolve();
+        return;
+      }
+      existingScript.addEventListener("load", () => {
+        if (window.pdfjsLib) {
+          window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER_URL;
+        }
+        resolve();
+      });
+      existingScript.addEventListener("error", (e) => reject(e));
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = PDFJS_SCRIPT_URL;
+    script.async = true;
+    script.onload = () => {
+      if (window.pdfjsLib) {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER_URL;
+      }
+      resolve();
+    };
+    script.onerror = (err) => reject(err);
+    document.head.appendChild(script);
+  });
+
+  return pdfJsScriptPromise;
+}
+
 export function usePdfDocument(url: string) {
   const [state, setState] = useState<PDFDocumentState>({
     pdfDoc: null,
@@ -32,33 +82,6 @@ export function usePdfDocument(url: string) {
 
   useEffect(() => {
     let isMounted = true;
-
-    async function loadPdfJsScript(): Promise<void> {
-      if (window.pdfjsLib) return;
-
-      return new Promise((resolve, reject) => {
-        const existingScript = document.querySelector(
-          `script[src="${PDFJS_SCRIPT_URL}"]`
-        );
-        if (existingScript) {
-          existingScript.addEventListener("load", () => resolve());
-          existingScript.addEventListener("error", (e) => reject(e));
-          return;
-        }
-
-        const script = document.createElement("script");
-        script.src = PDFJS_SCRIPT_URL;
-        script.async = true;
-        script.onload = () => {
-          if (window.pdfjsLib) {
-            window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER_URL;
-          }
-          resolve();
-        };
-        script.onerror = (err) => reject(err);
-        document.head.appendChild(script);
-      });
-    }
 
     async function fetchAndInitPdf() {
       try {

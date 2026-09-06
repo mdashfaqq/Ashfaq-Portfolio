@@ -93,6 +93,8 @@ export function Certifications() {
             documentType={viewing.documentType}
             issuer={viewing.issuer}
             year={viewing.year}
+            skills={viewing.skills}
+            verificationLabel={viewing.verificationLabel}
             onClose={() => setViewing(null)}
           />
         )}
