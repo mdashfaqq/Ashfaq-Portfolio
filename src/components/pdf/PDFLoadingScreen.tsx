@@ -1,4 +1,3 @@
-import React from "react";
 import { HiDownload, HiRefresh } from "react-icons/hi";
 
 interface PDFLoadingScreenProps {

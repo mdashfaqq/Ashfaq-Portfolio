@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { HiX } from "react-icons/hi";
 import { navigateWithTransition } from "./PageTransitionOverlay";

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { navigateToSection } from "@/components/navigation/CinematicTransition";
-import { navigateToRoute } from "@/routes/AppRouter";
 
 const links = [
   { href: "#projects", label: "Work" },

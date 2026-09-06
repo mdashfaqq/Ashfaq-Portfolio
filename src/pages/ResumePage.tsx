@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { usePdfDocument } from "@/components/pdf/usePdfDocument";
 import { Navbar } from "@/components/layout/Navbar";
 import { PDFThumbnailSidebar } from "@/components/pdf/PDFThumbnailSidebar";
