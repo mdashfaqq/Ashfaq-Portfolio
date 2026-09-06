@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
-import { DocumentViewer } from "@/components/ui/DocumentViewer";
-import { profile } from "@/data/profile";
+import { navigateToSection } from "@/components/navigation/CinematicTransition";
+import { navigateToRoute } from "@/routes/AppRouter";
 
 const links = [
   { href: "#projects", label: "Work" },
@@ -16,7 +16,7 @@ const links = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [showResume, setShowResume] = useState(false);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -29,6 +29,38 @@ export function Navbar() {
       document.body.style.overflow = "";
     };
   }, [mobileOpen]);
+
+  // Accessibility: Close mobile menu when ESC is pressed
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileOpen) {
+        setMobileOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileOpen]);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, label: string) => {
+    e.preventDefault();
+    if (mobileOpen) setMobileOpen(false);
+
+    const onResumePage =
+      window.location.pathname === "/resume" ||
+      window.location.pathname === "/resume/" ||
+      window.location.hash.includes("resume");
+
+    if (href === "/resume") {
+      if (onResumePage) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      navigateToSection("/resume", "RESUME");
+      return;
+    }
+
+    navigateToSection(href, label);
+  };
 
   return (
     <>
@@ -45,6 +77,7 @@ export function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href, link.label)}
                 className="text-[var(--foreground)] font-medium uppercase tracking-wider text-sm md:text-lg lg:text-[1.2rem] hover:opacity-70 transition-opacity duration-200"
               >
                 {link.label}
@@ -52,13 +85,13 @@ export function Navbar() {
             </li>
           ))}
           <li>
-            <button
-              type="button"
-              onClick={() => setShowResume(true)}
+            <a
+              href="/resume"
+              onClick={(e) => handleNavClick(e, "/resume", "Resume")}
               className="text-[var(--foreground)] font-medium uppercase tracking-wider text-sm md:text-lg lg:text-[1.2rem] hover:opacity-70 transition-opacity duration-200"
             >
               Resume
-            </button>
+            </a>
           </li>
         </ul>
 
@@ -100,23 +133,20 @@ export function Navbar() {
                         <a
                           href={link.href}
                           className="text-[var(--foreground)] font-medium uppercase tracking-wider text-lg hover:opacity-70 transition-opacity duration-200"
-                          onClick={() => setMobileOpen(false)}
+                          onClick={(e) => handleNavClick(e, link.href, link.label)}
                         >
                           {link.label}
                         </a>
                       </li>
                     ))}
                     <li>
-                      <button
-                        type="button"
+                      <a
+                        href="/resume"
                         className="text-[var(--foreground)] font-medium uppercase tracking-wider text-lg hover:opacity-70 transition-opacity duration-200"
-                        onClick={() => {
-                          setMobileOpen(false);
-                          setShowResume(true);
-                        }}
+                        onClick={(e) => handleNavClick(e, "/resume", "Resume")}
                       >
                         Resume
-                      </button>
+                      </a>
                     </li>
                   </ul>
                 </nav>
@@ -125,19 +155,6 @@ export function Navbar() {
           )}
         </AnimatePresence>
       </header>
-  
-      {/* OUTSIDE THE HEADER */}
-      <AnimatePresence>
-        {showResume && (
-          <DocumentViewer
-            url="/resume.pdf"
-            externalUrl={profile.resume}
-            title="My Resume"
-            onClose={() => setShowResume(false)}
-          />
-        )}
-      </AnimatePresence>
     </>
   );
-  
 }
