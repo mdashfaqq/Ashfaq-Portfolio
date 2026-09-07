@@ -150,10 +150,12 @@ body,
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.06) 20%,
-    rgba(255, 255, 255, 0.06) 80%,
+    rgba(216, 197, 163, 0.15) 15%,
+    rgba(216, 197, 163, 0.45) 50%,
+    rgba(216, 197, 163, 0.15) 85%,
     transparent
   );
+  box-shadow: 0 0 8px rgba(216, 197, 163, 0.2);
 }
 
 .surface-card {

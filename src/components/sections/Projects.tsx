@@ -147,7 +147,7 @@ export function Projects() {
             github: project.github,
             live: project.live,
           }))}
-          cardWidth="min(560px, calc(100vw - 2.5rem))"
+          cardWidth="min(510px, calc(100vw - 2.5rem))"
           cardClassName="rounded-xl"
           onCardClick={(index) => handleOpen(projects[index])}
         />

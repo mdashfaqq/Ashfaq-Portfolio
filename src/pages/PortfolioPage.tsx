@@ -28,11 +28,6 @@ const Certifications = lazy(() =>
   }))
 );
 
-const Services = lazy(() =>
-  import("@/components/sections/Services").then((m) => ({
-    default: m.Services,
-  }))
-);
 
 const Contact = lazy(() =>
   import("@/components/sections/Contact").then((m) => ({
@@ -58,11 +53,7 @@ export function PortfolioPage() {
           <div className="section-divider max-w-7xl mx-auto" />
           <About />
 
-          <div className="section-divider max-w-7xl mx-auto" />
           <Certifications />
-
-          <div className="section-divider max-w-7xl mx-auto" />
-          <Services />
 
           <div className="section-divider max-w-7xl mx-auto" />
           <Contact />
