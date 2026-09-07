@@ -1,0 +1,23 @@
+{
+  "name": "Mohamed Ashfaq | Portfolio",
+  "short_name": "Ashfaq",
+  "description": "Full-Stack Developer & Application Security Specialist based in Chennai.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "icons": [
+    {
+      "src": "/faviconn.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
