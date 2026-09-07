@@ -55,9 +55,6 @@ const TECH_ITEMS = [
 export default function FallingText({
   className = "",
   text = "",
-  highlightWords = [],
-  highlightClass = "highlighted",
-  wordColors,
   trigger = "scroll",
   backgroundColor = "transparent",
   wireframes = false,
@@ -70,6 +67,22 @@ export default function FallingText({
   const canvasContainerRef = useRef<HTMLDivElement>(null);
 
   const [effectStarted, setEffectStarted] = useState(false);
+  const [resizeKey, setResizeKey] = useState(0);
+
+  useEffect(() => {
+    let timeoutId: number;
+    const handleResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(() => {
+        setResizeKey((k) => k + 1);
+      }, 250);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   useEffect(() => {
     if (!textRef.current) return;
@@ -77,7 +90,7 @@ export default function FallingText({
     // Use curated TECH_ITEMS for exact typography hierarchy and cascading baseline
     const words = text ? text.split(" ").filter((w) => w.trim().length > 0) : [];
     const items = words.length > 0
-      ? words.map((w, i) => {
+      ? words.map((w) => {
           const match = TECH_ITEMS.find(
             (item) => item.name.toLowerCase() === w.trim().toLowerCase().replace(/^[·,.\s]+|[·,\s]+$/g, "")
           );
@@ -85,15 +98,18 @@ export default function FallingText({
         })
       : TECH_ITEMS;
 
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
+
     const newHTML = items
       .map((item, index) => {
         const tierClass = `word-tier-${item.tier}`;
-        return `<span class="word ${tierClass}" data-index="${index}" style="transform: translateY(${item.offsetY}px) rotate(${item.rot}deg);">${item.name}</span>`;
+        const offset = isMobile ? Math.round(item.offsetY * 0.5) : item.offsetY;
+        return `<span class="word ${tierClass}" data-index="${index}" style="transform: translateY(${offset}px) rotate(${item.rot}deg);">${item.name}</span>`;
       })
       .join(" ");
 
     textRef.current.innerHTML = newHTML;
-  }, [text]);
+  }, [text, resizeKey]);
 
   useEffect(() => {
     if (trigger === "auto") {
@@ -122,8 +138,10 @@ export default function FallingText({
       Matter;
 
     const containerRect = containerRef.current.getBoundingClientRect();
+    const textRect = textRef.current.getBoundingClientRect();
     const width = Math.max(containerRect.width, 240);
-    const height = Math.max(containerRect.height, 120);
+    const isMobile = width < 640;
+    const height = Math.max(containerRect.height, textRect.height + 20, isMobile ? 240 : 135);
 
     if (width <= 0 || height <= 0) {
       return;
@@ -177,9 +195,9 @@ export default function FallingText({
       boundaryOptions
     );
 
-    // Physical collision buffer to guarantee clear separation while keeping words cohesive
-    const collisionPaddingX = 14;
-    const collisionPaddingY = 8;
+    // Physical collision buffer adapted for mobile and desktop screens
+    const collisionPaddingX = isMobile ? 8 : 14;
+    const collisionPaddingY = isMobile ? 6 : 8;
 
     const wordSpans = textRef.current.querySelectorAll<HTMLSpanElement>(".word");
     const wordBodies = [...wordSpans].map((elem, i) => {
@@ -190,8 +208,8 @@ export default function FallingText({
 
       const halfW = bodyWidth / 2;
       const targetX = Math.max(
-        halfW + 6,
-        Math.min(width - halfW - 6, rect.left - containerRect.left + rect.width / 2)
+        halfW + 4,
+        Math.min(width - halfW - 4, rect.left - containerRect.left + rect.width / 2)
       );
       const targetY = Math.max(
         bodyHeight / 2 + 2,
@@ -200,10 +218,10 @@ export default function FallingText({
 
       // Start high up at the top of the About section in a staggered cascade
       const startX = Math.max(
-        halfW + 8,
-        Math.min(width - halfW - 8, targetX + ((i % 5) - 2) * 10)
+        halfW + 6,
+        Math.min(width - halfW - 6, targetX + ((i % 5) - 2) * (isMobile ? 5 : 10))
       );
-      const startY = - (100 + (i % 8) * 45 + Math.floor(i / 8) * 70);
+      const startY = - (80 + (i % 8) * 35 + Math.floor(i / 8) * (isMobile ? 40 : 70));
 
       // Restrained, intentional initial angle (-3° to +3°)
       const angleDeg = (((i * 7) % 9) - 4) * 0.7;
@@ -221,8 +239,8 @@ export default function FallingText({
 
       // Downward velocity falling from top of section
       Matter.Body.setVelocity(body, {
-        x: ((i % 5) - 2) * 0.22,
-        y: 2.2 + (i % 4) * 0.45,
+        x: ((i % 5) - 2) * (isMobile ? 0.12 : 0.22),
+        y: 2.0 + (i % 4) * 0.35,
       });
       Matter.Body.setAngularVelocity(body, ((i % 5) - 2) * 0.002);
       return { elem, body, rect, bodyWidth, bodyHeight, targetX, targetY };

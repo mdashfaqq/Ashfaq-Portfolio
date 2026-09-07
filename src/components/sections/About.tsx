@@ -156,7 +156,7 @@ export function About() {
           transition={{ duration: 0.5, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
           className="mt-1 sm:mt-1.5 w-full relative"
         >
-          <div className="w-full min-h-[145px] sm:min-h-[160px] md:min-h-[170px] relative">
+          <div className="w-full min-h-[250px] sm:min-h-[180px] md:min-h-[170px] relative">
             <FallingText
               text="Python TypeScript JavaScript React Next.js Node.js Express Linux Git REST JWT CI/CD Kubernetes AWS C++ Dart Redis MongoDB GraphQL PHP Flutter Pandas Tailwind FastAPI PostgreSQL Docker NumPy TensorFlow PyTorch Scikit-learn OWASP Postman"
               trigger="scroll"
