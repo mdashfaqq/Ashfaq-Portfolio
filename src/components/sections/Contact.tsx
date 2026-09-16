@@ -1,10 +1,12 @@
 import { useState, type FormEvent } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   HiOutlineMail,
   HiOutlineLocationMarker,
   HiOutlineDocumentDownload,
   HiCheckCircle,
+  HiOutlineClipboardCopy,
+  HiCheck,
 } from "react-icons/hi";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -18,7 +20,16 @@ import { profile } from "@/data/profile";
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+
+  const handleCopyEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText(profile.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -31,7 +42,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="section-padding">
+    <section id="contact" className="pt-20 sm:pt-28 pb-6 sm:pb-10 px-5 sm:px-8 lg:px-16">
       <div className="max-w-7xl mx-auto">
         <SectionHeader
           label="Contact"
@@ -70,20 +81,57 @@ export function Contact() {
             </ul> */}
 
             <div className="space-y-3">
-              <a
-                href={`mailto:${profile.email}`}
-                className="flex items-center gap-3 p-3.5 rounded-xl border border-white/[0.08] bg-white/[0.02] hover:border-white/[0.14] hover:bg-white/[0.04] transition-all touch-manipulation group"
-              >
-                <div className="w-9 h-9 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-                  <HiOutlineMail size={18} className="text-white/70" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[10px] uppercase tracking-wider text-[var(--muted)]">Email</p>
-                  <p className="text-sm text-white truncate group-hover:text-white/90">
-                    {profile.email}
-                  </p>
-                </div>
-              </a>
+              <div className="flex items-center justify-between p-3.5 rounded-xl border border-white/[0.08] bg-white/[0.02] hover:border-white/[0.14] hover:bg-white/[0.04] transition-all group">
+                <a
+                  href={`mailto:${profile.email}`}
+                  className="flex items-center gap-3 min-w-0 flex-1 touch-manipulation"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
+                    <HiOutlineMail size={18} className="text-white/70" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[10px] uppercase tracking-wider text-[var(--muted)]">Email</p>
+                    <p className="text-sm text-white truncate group-hover:text-white/90">
+                      {profile.email}
+                    </p>
+                  </div>
+                </a>
+
+                {/* Copy Email Button */}
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  className="ml-2 px-2.5 py-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.1] text-xs text-white/70 hover:text-white transition-all flex items-center gap-1.5 shrink-0 cursor-pointer"
+                  title="Copy email address"
+                  aria-label="Copy email address"
+                >
+                  <AnimatePresence mode="wait">
+                    {copied ? (
+                      <motion.span
+                        key="copied"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        className="inline-flex items-center gap-1 text-emerald-400 font-mono text-[11px]"
+                      >
+                        <HiCheck size={14} />
+                        <span>Copied</span>
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="copy"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        className="inline-flex items-center gap-1 font-mono text-[11px]"
+                      >
+                        <HiOutlineClipboardCopy size={14} />
+                        <span className="hidden sm:inline">Copy</span>
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </button>
+              </div>
 
               <a
                 href={profile.linkedin}

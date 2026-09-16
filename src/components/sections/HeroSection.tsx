@@ -30,32 +30,16 @@ export function HeroSection() {
           </Magnet>
         </div>
 
-        {/* Tagline Bar: Centered on Mobile, Marquee on Desktop */}
+        {/* Tagline Bar: Static Clean Centered Subtitle */}
         <div className="w-full pb-6 sm:pb-7 md:pb-10 relative z-20 overflow-hidden">
           <FadeIn delay={0.35} y={20} className="w-full">
-            {/* Mobile View (<md): Clean, centered text with horizontal padding, wrapping naturally */}
-            <div className="block md:hidden px-5 sm:px-8 text-center select-none">
+            <div className="px-5 sm:px-8 text-center select-none">
               <p
-                className="text-[var(--muted)] font-light uppercase tracking-wide leading-relaxed mx-auto max-w-[340px]"
-                style={{ fontSize: 'clamp(0.7rem, 2.6vw, 0.85rem)' }}
+                className="text-[var(--muted)] font-light uppercase tracking-widest leading-relaxed mx-auto max-w-4xl"
+                style={{ fontSize: 'clamp(0.72rem, 1.2vw, 1.02rem)' }}
               >
-                Full-Stack Developer • Mobile Apps & Web Platforms • Production-Ready Software
+                Full-Stack Developer • Cybersecurity Specialist • Mobile Apps & Web Platforms • Production-Ready Software
               </p>
-            </div>
-
-            {/* Desktop View (md+): Full-width marquee loop unchanged */}
-            <div className="hidden md:block overflow-hidden select-none py-1 w-full mask-marquee">
-              <div className="running-text-track">
-                {[...Array(4)].map((_, i) => (
-                  <span
-                    key={i}
-                    className="text-[var(--muted)] font-light uppercase tracking-widest pr-14 inline-block shrink-0"
-                    style={{ fontSize: 'clamp(0.8rem, 1.25vw, 1.35rem)' }}
-                  >
-                    Full-Stack Developer • Mobile Apps & Web Platforms • Production-Ready Software • Secure Architecture •&nbsp;
-                  </span>
-                ))}
-              </div>
             </div>
           </FadeIn>
         </div>

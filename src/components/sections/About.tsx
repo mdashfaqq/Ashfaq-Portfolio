@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import BounceCards from "@/components/ui/BounceCards";
-import FallingText from "@/components/ui/FallingText";
 
 const desktopTransforms = [
   "rotate(-5deg) translate(-75px, 8px)",
@@ -36,6 +35,39 @@ const cardsData = [
   },
 ];
 
+const skillsRow1 = [
+  "React",
+  "TypeScript",
+  "Next.js",
+  "Node.js",
+  "Python",
+  "FastAPI",
+  "Docker",
+  "PostgreSQL",
+  "Flutter",
+  "Tailwind CSS",
+  "Linux",
+  "Supabase",
+  "Express.js",
+  "MySQL",
+  "Git",
+];
+
+const skillsRow2 = [
+  "REST API Security",
+  "OWASP Top 10",
+  "JWT Authentication",
+  "PostgreSQL RLS",
+  "RBAC Architecture",
+  "CI/CD Pipelines",
+  "Redis",
+  "Machine Learning",
+  "Scikit-learn",
+  "Burp Suite",
+  "Containerization",
+  "Full-Stack Systems",
+];
+
 export function About() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
@@ -59,7 +91,7 @@ export function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="px-5 sm:px-8 lg:px-12 pt-14 sm:pt-16 md:pt-20 pb-0 relative overflow-hidden bg-[#09090b] text-[#f4f1ea]"
+      className="px-5 sm:px-8 lg:px-12 pt-14 sm:pt-16 md:pt-20 pb-8 sm:pb-12 relative overflow-hidden bg-[#09090b] text-[#f4f1ea]"
     >
       <div className="max-w-[1240px] mx-auto min-w-0">
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12 items-start lg:items-center">
@@ -87,14 +119,14 @@ export function About() {
               BUILDING SOFTWARE THAT WORKS IN PRODUCTION
             </motion.h2>
 
-            {/* Personal Story & Engineering Philosophy */}
+            {/* Rewritten Personal Story & Engineering Philosophy */}
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
               className="max-w-xl text-base sm:text-lg text-[#9c9485] leading-relaxed font-normal"
             >
-              I'm <span className="text-[#f4f1ea] font-semibold">Mohamed Ashfaq</span>, a full-stack engineer and application security specialist based in Chennai. I design and ship production-ready web and mobile platforms — from high-throughput restaurant POS engines and multi-tenant SaaS architectures to cross-platform Flutter applications. My approach bridges deep backend craftsmanship with rigorous defense: implementing zero-trust authentication, PostgreSQL row-level security, and machine-learning intrusion detection to build reliable software that scales smoothly under load without on-call drama — with <span className="text-[#d8c5a3] font-medium">hands-on experience using:</span>
+              I'm <span className="text-[#f4f1ea] font-semibold">Mohamed Ashfaq</span>, a full-stack engineer and cybersecurity specialist based in Chennai. I engineer and deploy production-grade web applications, secure APIs, and cross-platform mobile platforms. By combining clean frontend execution with battle-tested backend architecture — including zero-trust auth, PostgreSQL row-level security, and anomaly detection — I build resilient software engineered to scale effortlessly under real-world traffic.
             </motion.p>
           </div>
 
@@ -149,25 +181,53 @@ export function About() {
           </motion.div>
         </div>
 
-        {/* ================= CONTINUATION OF HERO: PRODUCTION TECH STREAM ================= */}
+        {/* ================= CONTINUATION OF HERO: PRODUCTION TECH STREAM (RUNNING TEXT) ================= */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-1 sm:mt-1.5 w-full relative"
+          transition={{ duration: 0.55, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-10 sm:mt-14 w-full relative space-y-3"
         >
-          <div className="w-full min-h-[250px] sm:min-h-[180px] md:min-h-[170px] relative">
-            <FallingText
-              text="Python TypeScript JavaScript React Next.js Node.js Express Linux Git REST JWT CI/CD Kubernetes AWS C++ Dart Redis MongoDB GraphQL PHP Flutter Pandas Tailwind FastAPI PostgreSQL Docker NumPy TensorFlow PyTorch Scikit-learn OWASP Postman"
-              trigger="scroll"
-              backgroundColor="transparent"
-              wireframes={false}
-              gravity={0.5}
-              mouseConstraintStiffness={0.85}
-            />
+          {/* Subtle Category Header */}
+          <div className="flex items-center gap-3 mb-2">
+            <span className="text-[10px] sm:text-[11px] font-mono tracking-[0.2em] uppercase text-[#8e8677] font-semibold">
+              CORE TECHNOLOGIES & STACK
+            </span>
+            <div className="flex-1 h-[1px] bg-gradient-to-r from-white/[0.08] to-transparent" />
+          </div>
+
+          {/* Running Text Row 1: Core Technologies (Leftward Stream) */}
+          <div className="w-full overflow-hidden select-none py-1 relative [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+            <div className="flex gap-3 w-max animate-[marquee-horizontal_32s_linear_infinite] hover:[animation-play-state:paused]">
+              {[...skillsRow1, ...skillsRow1].map((skill, idx) => (
+                <span
+                  key={idx}
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs sm:text-sm font-mono text-[#d8c5a3] whitespace-nowrap hover:border-[#d8c5a3]/50 hover:bg-white/[0.07] transition-all"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#d8c5a3]/70" />
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Running Text Row 2: Architecture & Security (Rightward Stream) */}
+          <div className="w-full overflow-hidden select-none py-1 relative [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+            <div className="flex gap-3 w-max animate-[marquee-reverse_36s_linear_infinite] hover:[animation-play-state:paused]">
+              {[...skillsRow2, ...skillsRow2].map((skill, idx) => (
+                <span
+                  key={idx}
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.02] border border-white/[0.06] text-xs sm:text-sm font-mono text-white/70 whitespace-nowrap hover:border-white/20 hover:text-white hover:bg-white/[0.05] transition-all"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/70" />
+                  {skill}
+                </span>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
     </section>
   );
 }
+

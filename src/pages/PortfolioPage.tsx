@@ -45,14 +45,15 @@ export function PortfolioPage() {
 
         <Suspense fallback={null}>
           <div className="section-divider max-w-7xl mx-auto" />
+          <About />
+
+          <div className="section-divider max-w-7xl mx-auto" />
           <Projects />
 
           <div className="section-divider max-w-7xl mx-auto" />
           <Experience />
 
           <div className="section-divider max-w-7xl mx-auto" />
-          <About />
-
           <Certifications />
 
           <div className="section-divider max-w-7xl mx-auto" />

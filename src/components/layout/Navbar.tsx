@@ -4,10 +4,9 @@ import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { navigateToSection } from "@/components/navigation/CinematicTransition";
 
 const links = [
-  { href: "#home", label: "Home" },
+  { href: "#about", label: "About" },
   { href: "#projects", label: "Work" },
   { href: "#experience", label: "Experience" },
-  { href: "#about", label: "About" },
   { href: "#certifications", label: "Credentials" },
   { href: "#contact", label: "Contact" },
 ];
@@ -77,7 +76,8 @@ export function Navbar() {
               <a
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href, link.label)}
-                className="text-[var(--foreground)] font-medium uppercase tracking-wider text-sm md:text-lg lg:text-[1.2rem] hover:opacity-70 transition-opacity duration-200"
+                style={{ fontFamily: "'M PLUS Rounded 1c', 'Nunito', sans-serif" }}
+                className="text-[#d8c5a3] font-extrabold uppercase tracking-[0.12em] text-sm sm:text-base md:text-lg lg:text-[1.3rem] xl:text-[1.4rem] hover:text-white transition-colors duration-200"
               >
                 {link.label}
               </a>
@@ -87,7 +87,8 @@ export function Navbar() {
             <a
               href="/resume"
               onClick={(e) => handleNavClick(e, "/resume", "Resume")}
-              className="text-[var(--foreground)] font-medium uppercase tracking-wider text-sm md:text-lg lg:text-[1.2rem] hover:opacity-70 transition-opacity duration-200"
+              style={{ fontFamily: "'M PLUS Rounded 1c', 'Nunito', sans-serif" }}
+              className="text-[#d8c5a3] font-extrabold uppercase tracking-[0.12em] text-sm sm:text-base md:text-lg lg:text-[1.3rem] xl:text-[1.4rem] hover:text-white transition-colors duration-200"
             >
               Resume
             </a>
@@ -96,12 +97,12 @@ export function Navbar() {
 
         {/* Mobile menu button */}
         <button
-          className="lg:hidden p-2.5 -mr-1 text-white rounded-lg hover:bg-white/[0.06] transition-colors touch-manipulation"
+          className="lg:hidden p-2.5 -mr-1 text-[#d8c5a3] rounded-lg hover:bg-white/[0.06] transition-colors touch-manipulation"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
         >
-          {mobileOpen ? <HiX size={22} /> : <HiMenuAlt3 size={22} />}
+          {mobileOpen ? <HiX size={24} /> : <HiMenuAlt3 size={24} />}
         </button>
       </nav>
 
@@ -131,7 +132,8 @@ export function Navbar() {
                       <li key={link.href}>
                         <a
                           href={link.href}
-                          className="text-[var(--foreground)] font-medium uppercase tracking-wider text-lg hover:opacity-70 transition-opacity duration-200"
+                          style={{ fontFamily: "'M PLUS Rounded 1c', 'Nunito', sans-serif" }}
+                          className="text-[#d8c5a3] font-extrabold uppercase tracking-[0.12em] text-2xl sm:text-3xl hover:text-white transition-colors duration-200"
                           onClick={(e) => handleNavClick(e, link.href, link.label)}
                         >
                           {link.label}
@@ -141,7 +143,8 @@ export function Navbar() {
                     <li>
                       <a
                         href="/resume"
-                        className="text-[var(--foreground)] font-medium uppercase tracking-wider text-lg hover:opacity-70 transition-opacity duration-200"
+                        style={{ fontFamily: "'M PLUS Rounded 1c', 'Nunito', sans-serif" }}
+                        className="text-[#d8c5a3] font-extrabold uppercase tracking-[0.12em] text-2xl sm:text-3xl hover:text-white transition-colors duration-200"
                         onClick={(e) => handleNavClick(e, "/resume", "Resume")}
                       >
                         Resume
