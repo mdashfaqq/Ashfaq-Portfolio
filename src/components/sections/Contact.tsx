@@ -7,10 +7,12 @@ import {
   HiCheckCircle,
   HiOutlineClipboardCopy,
   HiCheck,
+  HiOutlineExclamationCircle,
 } from "react-icons/hi";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { profile } from "@/data/profile";
+import { sendContactEmail } from "@/services/email";
 
 // const trustPoints = [
 //   "6+ products shipped end-to-end",
@@ -20,6 +22,8 @@ import { profile } from "@/data/profile";
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
 
@@ -31,14 +35,28 @@ export function Contact() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Portfolio inquiry from ${form.name || "visitor"}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`,
-    );
-    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    setErrorMessage(null);
+    setLoading(true);
+
+    try {
+      await sendContactEmail({
+        name: form.name,
+        email: form.email,
+        message: form.message,
+        subject: `Portfolio Inquiry from ${form.name || "Visitor"}`,
+      });
+      setSubmitted(true);
+      setForm({ name: "", email: "", message: "" });
+    } catch (err: any) {
+      console.error("Failed to send message via Resend:", err);
+      setErrorMessage(
+        err.message || "Failed to send message. Please try again or email directly."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -184,11 +202,11 @@ export function Contact() {
           >
             {submitted ? (
               <div className="h-full flex flex-col items-center justify-center text-center py-8">
-                <HiCheckCircle size={40} className="text-emerald-400 mb-4" />
-                <h3 className="text-lg font-semibold text-white mb-2">Opening your email client</h3>
-                <p className="text-sm text-[var(--muted)] mb-6 max-w-xs">
-                  Your message is ready to send. If your email app didn&apos;t open, reach me directly
-                  at {profile.email}.
+                <HiCheckCircle size={48} className="text-emerald-400 mb-4 animate-bounce" />
+                <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">Message sent successfully!</h3>
+                <p className="text-sm text-[var(--muted)] mb-6 max-w-xs leading-relaxed">
+                  Thank you for reaching out. Your email has been delivered via Resend directly to {profile.email}.
+                  I will get back to you shortly.
                 </p>
                 <button
                   type="button"
@@ -205,6 +223,13 @@ export function Contact() {
                   Tell me about your role, project, or opportunity.
                 </p>
 
+                {errorMessage && (
+                  <div className="mb-4 p-3.5 rounded-xl border border-red-500/20 bg-red-500/10 text-red-300 text-xs flex items-start gap-2.5">
+                    <HiOutlineExclamationCircle size={18} className="shrink-0 mt-0.5" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label htmlFor="contact-name" className="block text-xs font-medium text-[var(--muted)] mb-1.5">
@@ -219,6 +244,7 @@ export function Contact() {
                       className="input-field"
                       placeholder="Your name"
                       autoComplete="name"
+                      disabled={loading}
                     />
                   </div>
                   <div>
@@ -234,6 +260,7 @@ export function Contact() {
                       className="input-field"
                       placeholder="you@company.com"
                       autoComplete="email"
+                      disabled={loading}
                     />
                   </div>
                   <div>
@@ -248,20 +275,35 @@ export function Contact() {
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       className="input-field resize-none"
                       placeholder="I'd love to discuss a full-stack role / project..."
+                      disabled={loading}
                     />
                   </div>
-                  <button type="submit" className="btn-primary w-full justify-center">
-                    Send message
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="btn-primary w-full justify-center disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    {loading ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        <span>Sending message...</span>
+                      </>
+                    ) : (
+                      "Send message"
+                    )}
                   </button>
                 </form>
-<a
-  href="/resume.pdf"
-  download="Mohamed_Ashfaq_Resume.pdf"
-  className="mt-4 flex items-center justify-center gap-2 text-sm text-[var(--muted)] hover:text-white transition-colors touch-manipulation"
->
-  <HiOutlineDocumentDownload size={16} />
-  Download Resume
-</a>
+                <a
+                  href="/resume.pdf"
+                  download="Mohamed_Ashfaq_Resume.pdf"
+                  className="mt-4 flex items-center justify-center gap-2 text-sm text-[var(--muted)] hover:text-white transition-colors touch-manipulation"
+                >
+                  <HiOutlineDocumentDownload size={16} />
+                  Download Resume
+                </a>
               </>
             )}
           </motion.div>
