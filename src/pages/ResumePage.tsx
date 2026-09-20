@@ -10,7 +10,6 @@ import { navigateToSection } from "@/components/navigation/CinematicTransition";
 import { profile } from "@/data/profile";
 import {
   HiDownload,
-  HiExternalLink,
   HiMail,
   HiArrowRight,
   HiArrowLeft,
