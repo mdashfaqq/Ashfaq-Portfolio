@@ -166,7 +166,7 @@ export function ResumePage() {
               <HiDownload size={15} />
               <span className="truncate">Download</span>
             </button>
-
+{/* 
             <a
               href={profile.resume}
               target="_blank"
@@ -175,7 +175,7 @@ export function ResumePage() {
             >
               <HiExternalLink size={15} />
               <span className="truncate">Drive</span>
-            </a>
+            </a> */}
 
             <button
               type="button"
