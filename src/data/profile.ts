@@ -33,60 +33,66 @@ Security is an important part of my development approach. I have experience with
 I enjoy solving practical engineering problems, learning new technologies, and turning ideas into usable products. My focus is on writing maintainable software, designing secure systems, improving performance, and delivering products that work reliably in real-world environments.`,
 
   techStack: {
+    languages: [
+      "Java",
+      "Python",
+      "JavaScript",
+      "TypeScript",
+      "SQL",
+      "Dart",
+      "C++"
+    ],
+
     frontend: [
       "React",
-      "TypeScript",
-      "JavaScript",
-      "Flutter",
-      "Dart",
-      "Tailwind CSS"
+      "Next.js",
+      "Vite",
+      "Tailwind CSS",
+      "shadcn/ui"
     ],
 
     backend: [
       "Node.js",
       "Express.js",
       "PHP",
-      "Python",
       "FastAPI",
-      "REST APIs",
-      "JWT Authentication"
+      "REST APIs"
+    ],
+
+    mobile: [
+      "Flutter",
+      "Capacitor"
     ],
 
     database: [
       "MySQL",
       "PostgreSQL",
-      "Supabase",
-      "SQLite"
-    ],
-
-    devops: [
-      "Linux",
-      "Docker",
-      "Git",
-      "GitHub",
-      "Hostinger",
-      "CI/CD"
+      "Supabase"
     ],
 
     security: [
-      "OWASP Top 10",
+      "OWASP",
+      "JWT",
       "RBAC",
-      "PostgreSQL RLS",
-      "REST API Security",
       "Burp Suite",
-      "Nmap",
       "Wireshark",
-      "Nessus",
+      "Nmap",
       "Metasploit"
     ],
 
-    machineLearning: [
-      "Python",
-      "Scikit-learn",
-      "XGBoost",
-      "Isolation Forest",
-      "Autoencoder",
-      "LSTM"
+    toolsAndSystems: [
+      "Linux",
+      "Git",
+      "GitHub",
+      "Docker",
+      "Nginx"
+    ],
+
+    aiAssisted: [
+      "GitHub Copilot",
+      "Cursor",
+      "Claude Code",
+      "Antigravity"
     ]
   },
 

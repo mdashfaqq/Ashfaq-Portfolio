@@ -77,7 +77,7 @@ export function Navbar() {
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href, link.label)}
                 style={{ fontFamily: "'M PLUS Rounded 1c', 'Nunito', sans-serif" }}
-                className="text-[#d8c5a3] font-extrabold uppercase tracking-[0.12em] text-sm sm:text-base md:text-lg lg:text-[1.3rem] xl:text-[1.4rem] hover:text-white transition-colors duration-200"
+                className="text-[#d8c5a3] font-extrabold uppercase tracking-[0.12em] text-base sm:text-lg lg:text-[1.24rem] xl:text-[1.32rem] hover:text-white transition-colors duration-200"
               >
                 {link.label}
               </a>
@@ -88,7 +88,7 @@ export function Navbar() {
               href="/resume"
               onClick={(e) => handleNavClick(e, "/resume", "Resume")}
               style={{ fontFamily: "'M PLUS Rounded 1c', 'Nunito', sans-serif" }}
-              className="text-[#d8c5a3] font-extrabold uppercase tracking-[0.12em] text-sm sm:text-base md:text-lg lg:text-[1.3rem] xl:text-[1.4rem] hover:text-white transition-colors duration-200"
+              className="text-[#d8c5a3] font-extrabold uppercase tracking-[0.12em] text-base sm:text-lg lg:text-[1.24rem] xl:text-[1.32rem] hover:text-white transition-colors duration-200"
             >
               Resume
             </a>

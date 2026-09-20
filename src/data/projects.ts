@@ -102,6 +102,7 @@ export const projects: Project[] = [
       "Business analytics dashboard",
     ],
     github: "https://github.com/mdashfaqq/Rental-Utility-System",
+    live: "https://rental-utility-system.vercel.app/login?demo=true",
     image: "/rentalpos.webp",
     featured: true,
   },
